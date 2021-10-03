@@ -1,4 +1,5 @@
 from PIL import Image
+import concurrent.futures
 
 # Start with digits for number of image sets
 # e.g. 11 = 2 image sets, 111 = 3 image sets
@@ -14,14 +15,18 @@ max_id = start_id * num_parts
 # Counter
 counter = start_id
 
-# Array of parts
+# List of parts
 parts_groups = ["one", "two", "three", "four", "five"]
 
-# Loop
-while counter <= max_id:
+# List of combinations
+combos = []
 
+# Max workers
+max_workers=7
+
+def make_pup(combo):
     # Quick breakdown of the ID into parts and color
-    img_id = str(counter)
+    img_id = str(combo)
     body = int(img_id[0]) - 1
     fur = int(img_id[1]) - 1
     face = int(img_id[2]) - 1
@@ -45,7 +50,10 @@ while counter <= max_id:
     # Output the image
     body.save("img/collection/" + img_id + ".png", "PNG")
 
-    # break
+# Loop
+while counter <= max_id:
+    # Add combo to the list
+    combos.append(counter)
 
     # Skip 6-0 for ones position
     if counter % 10 == 5:
@@ -65,8 +73,9 @@ while counter <= max_id:
     if counter % 10000 > 5555:
         counter += 5000
 
-
-    
+# Distribute output to the thread pool
+with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
+        executor.map(make_pup, combos)
 
     
     

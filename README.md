@@ -46,7 +46,7 @@ Total NFTs: 3125 (5 parts ^ 5 variants)
 ```
 % time python3 generate_collection.py
 
-python3 generate_collection.py  556.09s user 5.58s system 99% cpu 9:27.34 total
+python3 generate_collection.py  7761.16s user 87.18s system 638% cpu 20:28.44 total
 ```
 
 ### Creating the blockchain smart contract
