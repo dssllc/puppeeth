@@ -26,9 +26,9 @@ Each pup has a unique number 5 digits long, each digit ranging from 1 to 5.
 
 Each value indicates which part variation the pup has, whether _one_, _green_, _red_, _teal_, or _yellow_.
 
-For example, Ted 11111 is all blue, and Ted 22222 is all green, Ted 11222 is part blue and part green, and so on.
+For example, Pup 11111 is all blue, and Pup 22222 is all green, Pup 11222 is part blue and part green, and so on.
 
-The collection is generated with a small `python` script using the Pillow image library. A single loop iterates from Pup 11111 to Pupxsxx 55555, skipping any number with a digit greater than 5, combining the respective par images, and outputs the unique Ted into the `img/collection` directory.
+The collection is generated with a small `python` script using the Pillow image library. A single loop iterates from Pup 11111 to Pup 55555, skipping any number with a digit greater than 5, combining the respective par images, and outputs the unique Ted into the `img/collection` directory.
 
 Please see [generate_collection.py](generate_collection.py) for more information on the algorithm.
 
