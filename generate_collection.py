@@ -1,4 +1,5 @@
 from PIL import Image
+import json
 import concurrent.futures
 
 # Start with digits for number of image sets
@@ -15,8 +16,13 @@ max_id = start_id * num_parts
 # Counter
 counter = start_id
 
-# List of parts
+# Lists of parts
 parts_groups = ["one", "two", "three", "four", "five"]
+bodies = ["Brown", "Blonde", "Beige", "Purple", "White"]
+shirts = ["Woof", "Puppeeth", "No Kennel", "Gold Star", "Stars"]
+furs = ["Spikey", "Curly", "Shaggy", "Groomed", "Fluffy"]
+ears_types = ["Flappy", "Hairy", "Small", "Trendy", "Pointy"]
+faces = ["Friendly", "Mad", "Worried", "Confident", "Mischievous"]
 
 # List of combinations
 combos = []
@@ -34,21 +40,52 @@ def make_pup(combo):
     shirt = int(img_id[4]) - 1
 
     # Load respective images
-    body = Image.open("img/parts/" + parts_groups[body] + "/body.png")
-    shirt = Image.open("img/parts/" + parts_groups[shirt] + "/shirt.png")
-    ears = Image.open("img/parts/" + parts_groups[ears] + "/ears.png")
-    fur = Image.open("img/parts/" + parts_groups[fur] + "/fur.png")
-    face = Image.open("img/parts/" + parts_groups[face] + "/face.png")
+    body_img = Image.open("img/parts/" + parts_groups[body] + "/body.png")
+    shirt_img = Image.open("img/parts/" + parts_groups[shirt] + "/shirt.png")
+    ears_img = Image.open("img/parts/" + parts_groups[ears] + "/ears.png")
+    fur_img = Image.open("img/parts/" + parts_groups[fur] + "/fur.png")
+    face_img = Image.open("img/parts/" + parts_groups[face] + "/face.png")
 
     # Paste images over each other
-    
-    body.alpha_composite(fur) 
-    body.alpha_composite(face)
-    body.alpha_composite(ears) 
-    body.alpha_composite(shirt) 
+    body_img.alpha_composite(fur_img) 
+    body_img.alpha_composite(face_img)
+    body_img.alpha_composite(ears_img) 
+    body_img.alpha_composite(shirt_img) 
 
     # Output the image
-    body.save("img/collection/" + img_id + ".png", "PNG")
+    body_img = body_img.convert('RGB')
+    body_img.save("img/collection/" + img_id + ".jpg", "JPEG", optimize=True, quality=75)
+
+    # Output the metadata
+    metadata = {
+        "name": "Pup " + img_id,
+        "description": "A Pup from the Puppeeth collection",
+        "image": "ipfs://",
+        "attributes": [
+            {
+                "trait_type": "Body",
+                "value": bodies[body]
+            },
+            {
+                "trait_type": "Shirt",
+                "value": shirts[shirt]
+            },
+            {
+                "trait_type": "Ears",
+                "value": ears_types[ears]
+            },
+            {
+                "trait_type": "Fur",
+                "value": furs[fur]
+            },
+            {
+                "trait_type": "Face",
+                "value": faces[face]
+            }
+        ]
+    }
+    with open("img/metadata/" + img_id + ".json", "w") as write_file:
+        json.dump(metadata, write_file)
 
 # Loop
 while counter <= max_id:
@@ -75,8 +112,4 @@ while counter <= max_id:
 
 # Distribute output to the thread pool
 with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
-        executor.map(make_pup, combos)
-
-    
-    
-    
+    executor.map(make_pup, combos)
