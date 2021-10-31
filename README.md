@@ -1,9 +1,9 @@
 # puppeeth
-A simple NFT learning project between a father and daughter
+An NFT avatar art collection hosted on IPFS and tokenized on Ethereum
 
 ## Background
 
-I have a small startup and have various projects to learn and apply blockchain technology. This project is an NFT art collection in collaboration with my daughter, a talented young artist.
+I have a small startup and have various projects to learn and apply blockchain technology. This project is an NFT art collection in collaboration with my daughter Olivia, a talented young artist.
 
 We are starting simple. She provides a basic set of image sets, and I do the rest.
 
@@ -50,3 +50,4 @@ python3 generate_collection.py  7761.16s user 87.18s system 638% cpu 20:28.44 to
 ```
 
 ### Creating the blockchain smart contract
+
