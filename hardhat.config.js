@@ -10,6 +10,9 @@ const cmcAPIKey = process.env.CMC_API_KEY || "";
  */
 module.exports = {
   solidity: "0.8.9",
+  paths: {
+    artifacts: './app/src/artifacts',
+  },
   networks: {
     hardhat: {
       chainId: 1337
