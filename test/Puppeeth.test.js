@@ -1,3 +1,4 @@
+const { BigNumber } = require("@ethersproject/bignumber");
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
 const { validIds: validIdsArray, invalidIds: invalidIdsArray, algorithm } = require("./testingIds.js");
@@ -138,8 +139,18 @@ describe("Puppeeth", function () {
     ).to.be.revertedWith("caller is not the owner");
   });
 
-  it("should return minted tokens", async function () {
-    let mintedTokens = await Puppeeth.mintedTokens();
-    expect(mintedTokens).to.eql([11111,22222,33333,44444,55555,11112,44332]);
+  it("should return total number of tokens", async function () {
+    let totalTokens = await Puppeeth.totalTokens();
+    expect(totalTokens).to.eql(BigNumber.from("7"));
+  });
+
+  it("should return true when token is minted", async function () {
+    let totalTokens = await Puppeeth.tokenMinted(11111);
+    expect(totalTokens).to.eql(true);
+  });
+
+  it("should return false when token is not minted", async function () {
+    let totalTokens = await Puppeeth.tokenMinted(54321);
+    expect(totalTokens).to.eql(false);
   });
 });

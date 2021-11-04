@@ -7,7 +7,7 @@ import { ethers } from "ethers";
 import Puppeeth
   from "../artifacts/contracts/Puppeeth.sol/Puppeeth.json";
 
-const CONTRACT_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+const CONTRACT_ADDRESS = "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853";
 
 const injected = new InjectedConnector({ supportedChainIds: [1, 3, 4, 5, 42, 1337] });
 
@@ -26,7 +26,7 @@ function PuppeePicker() {
 
   const web3React = useWeb3React();
 
-  const [mintedTokens, setMintedTokens] = useState([]);
+  const [mintedToken, setMintedToken] = useState(false);
   const [tokenId, setTokenId] = useState(0);
   const [tokenIdImg, setTokenIdImg] = useState(null);
   const handleSubmit = (e) => {
@@ -48,32 +48,29 @@ function PuppeePicker() {
     web3React.deactivate();
   }
 
-  async function loadMintedTokens() {
+  async function checkToken(tokenId) {
     tokenContract = new ethers.Contract(CONTRACT_ADDRESS, Puppeeth.abi, web3React.library);
-    setMintedTokens(await tokenContract.mintedTokens());
+    console.log(await tokenContract.tokenMinted(tokenId))
+    setMintedToken(await tokenContract.tokenMinted(tokenId));
   }
 
-  async function generateRandom() {
+  function generateRandom() {
     let randomTokenID = 0;
 
     while (!validId(randomTokenID))
       randomTokenID = Math.floor(Math.random() * (55555 - 11111) + 11111);
 
     updateImage(randomTokenID);
-    loadMintedTokens();
   }
 
-  function updateImage(theTokenId) {
+  async function updateImage(theTokenId) {
     setTokenId(theTokenId);
     setTokenIdImg(`/collection/${theTokenId}.jpg`);
+    await checkToken(theTokenId);
   }
 
   function handleMint() {
     mint();
-  }
-
-  function tokenMinted(theTokenId) {
-    return ~mintedTokens.indexOf(+theTokenId);
   }
 
   async function mint() {
@@ -86,7 +83,6 @@ function PuppeePicker() {
       };
       const transaction = await tokenContract.publicMint(tokenId, overrides);
       await transaction.wait();
-      loadMintedTokens();
     } catch (err) {
       console.log("Error: ", err);
     }
@@ -130,15 +126,15 @@ function PuppeePicker() {
               color="primary"
               onClick={generateRandom}
             >
-              Generate Random
+              Random 🐶
             </Button>
             <Button
               variant="contained"
-              disabled={!validId(tokenId) || !!tokenMinted(tokenId)}
+              disabled={!validId(tokenId) || mintedToken}
               color="primary"
               onClick={handleMint}
             >
-              Buy!
+              {mintedToken ? 'Sold!' : 'Buy!'}
             </Button>
             <Button
               variant="contained"
@@ -147,6 +143,12 @@ function PuppeePicker() {
             >
               Disconnect
             </Button>
+
+
+
+
+
+
             </Grid>
             </>}
             {!walletConnected() && <>
@@ -162,12 +164,12 @@ function PuppeePicker() {
             </>}
         </Grid>
         <Grid item xs={6}>
-          <img src={tokenIdImg} className={tokenMinted(tokenId) ? classes.purchased : null} width="100%" />
+          <img src={tokenIdImg} className={mintedToken ? classes.purchased : null} width="100%" />
         </Grid>
       </Grid>
+
       <p>token Id: {tokenId}</p>
-      <p>token minted: {tokenMinted(tokenId)}</p>
-      <p>minted tokens: {mintedTokens}</p>
+      <p>token minted: {mintedToken ? 'Yes' : 'No'}</p>
 
     </Container>
 
