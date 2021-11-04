@@ -166,4 +166,20 @@ describe("Puppeeth", function () {
     let totalTokens = await Puppeeth.tokenMinted(54321);
     expect(totalTokens).to.eql(false);
   });
+
+  it("should not mint for incorrect payment", async function () {
+    let msg = "InvalidPayment";
+    // Overpayment
+    let overrides = {
+      value: ethers.utils.parseEther(".15")
+    };
+    await expect(
+      Puppeeth.mint(54321, overrides)
+    ).to.be.revertedWith(msg);
+    // Underpayment
+    overrides.value = ethers.utils.parseEther(".01");
+    await expect(
+      Puppeeth.mint(54321, overrides)
+    ).to.be.revertedWith(msg);
+  });
 });

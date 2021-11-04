@@ -1,3 +1,6 @@
+//SPDX-License-Identifier: MIT
+pragma solidity 0.8.9;
+
 //                                     _   _
 //   _ __  _   _ _ __  _ __   ___  ___| |_| |__
 //  | '_ \| | | | '_ \| '_ \ / _ \/ _ \ __| '_ \
@@ -5,10 +8,9 @@
 //  | .__/ \__,_| .__/| .__/ \___|\___|\__|_| |_|
 //  |_|         |_|   |_|
 //
+//  web3 development by Decentralized Software Systems, LLC
 //  Original artwork by Olivia Porter
-
-//SPDX-License-Identifier: MIT
-pragma solidity 0.8.9;
+//  https://puppeeth.art
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -16,14 +18,13 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 
 /// @title puppeeth
 /// @author Decentralized Software Systems, LLC
-/// @notice NFT avatar art collection hosted on IPFS and tokenized on Ethereum
 contract Puppeeth is ERC721, Ownable {
     // Counter.
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
 
     // Price.
-    uint256 constant TOKEN_PRICE = .015 ether;
+    uint256 constant private TOKEN_PRICE = .015 ether;
 
     // Invalid token error.
     error InvalidTokenID();
@@ -31,9 +32,7 @@ contract Puppeeth is ERC721, Ownable {
     // Invalid payment error.
     error InvalidPayment();
 
-    /**
-     * @dev Constructor
-     */
+    /// @notice Reserves some tokens for the authors.
     constructor() ERC721("puppeeth", "PUPPEETH") {
         uint16[5] memory reserved = [
             11111,
@@ -48,11 +47,9 @@ contract Puppeeth is ERC721, Ownable {
         }
     }
 
-    /**
-     * @dev Public mint.
-     */
+    /// @notice Public mint.
     function mint(uint16 tokenId) public payable {
-        if (msg.value < TOKEN_PRICE)
+        if (msg.value != TOKEN_PRICE)
             revert InvalidPayment();
 
         if (!validId(tokenId))
@@ -62,16 +59,18 @@ contract Puppeeth is ERC721, Ownable {
         _safeMint(_msgSender(), tokenId);
     }
 
-    /**
-     * @dev See {IERC721Metadata-tokenURI}.
-     */
-    function tokenURI(uint256 tokenId) public view override returns (string memory) {
+    /// @notice Returns token URI.
+    /// @dev See {IERC721Metadata-tokenURI}.
+    function tokenURI(uint256 tokenId)
+        public
+        view
+        override
+        returns (string memory)
+    {
         return string(abi.encodePacked(super.tokenURI(tokenId), ".json"));
     }
 
-    /**
-     * @dev Check if ID is valid.
-     */
+    /// @notice Check if ID is valid.
     function validId(uint16 tokenId) public pure returns (bool) {
         return tokenId >= 11111 && tokenId <= 55555
             && tokenId % 10 > 0 && tokenId % 10 <= 5
@@ -80,31 +79,24 @@ contract Puppeeth is ERC721, Ownable {
             && tokenId % 10000 > 1000 && tokenId % 10000 <= 5555;
     }
 
-    /**
-     * @dev Withdrawl accrued balance.
-     */
+    /// @notice Withdrawl accrued balance.
     function withdraw() public onlyOwner {
         uint balance = address(this).balance;
         payable(msg.sender).transfer(balance);
     }
 
-    /**
-     * @dev Get total number of tokens.
-     */
+    /// @notice Get total number of tokens.
     function totalTokens() public view returns (uint256) {
       return _tokenIds.current();
     }
 
-    /**
-     * @dev Indicate if token is minted.
-     */
+    /// @notice Indicate if token is minted.
     function tokenMinted(uint16 tokenId) public view returns (bool) {
       return _exists(tokenId);
     }
 
-    /**
-     * @dev See {ERC721-_baseURI}.
-     */
+    /// @notice Returns token base URI.
+    /// @dev See {ERC721-_baseURI}.
     function _baseURI() internal pure override returns (string memory) {
         return "ipfs://QmXmjY1bFMuH5fCGbZ8CHd8fFWzJRZxTKQo7aievy7LUou/";
     }
