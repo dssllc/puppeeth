@@ -89,7 +89,7 @@ describe("Puppeeth", function () {
     };
     for (let i in badIds) {
       await expect(
-        Puppeeth.publicMint(badIds[i], overrides)
+        Puppeeth.mint(badIds[i], overrides)
       ).to.be.revertedWith(msg);
     }
   });
@@ -100,7 +100,7 @@ describe("Puppeeth", function () {
       value: payment
     };
     await expect(
-      Puppeeth.publicMint(11111, overrides)
+      Puppeeth.mint(11111, overrides)
     ).to.be.revertedWith("token already minted");
   });
 
@@ -120,7 +120,7 @@ describe("Puppeeth", function () {
       value: payment
     };
     let oldBalance = await owner.getBalance();
-    await Puppeeth.publicMint(44331, overrides);
+    await Puppeeth.mint(44331, overrides);
     expect(await Puppeeth.tokenURI(44331)).to.equal(tokenUri(44331));
     expect(await Puppeeth.ownerOf(44331)).to.equal(owner.address);
     let newBalance = await owner.getBalance();
@@ -132,7 +132,7 @@ describe("Puppeeth", function () {
       value: payment
     };
     let oldBalance = await secondAddress.getBalance();
-    await Puppeeth.connect(secondAddress).publicMint(44332, overrides);
+    await Puppeeth.connect(secondAddress).mint(44332, overrides);
     expect(await Puppeeth.tokenURI(44332)).to.equal(tokenUri(44332));
     expect(await Puppeeth.ownerOf(44332)).to.equal(secondAddress.address);
     let newBalance = await secondAddress.getBalance();

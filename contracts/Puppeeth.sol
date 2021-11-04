@@ -49,10 +49,17 @@ contract Puppeeth is ERC721, Ownable {
     }
 
     /**
-     * @dev See {ERC721-_baseURI}.
+     * @dev Public mint.
      */
-    function _baseURI() internal pure override returns (string memory) {
-        return "ipfs://QmXmjY1bFMuH5fCGbZ8CHd8fFWzJRZxTKQo7aievy7LUou/";
+    function mint(uint16 tokenId) public payable {
+        if (msg.value < TOKEN_PRICE)
+            revert InvalidPayment();
+
+        if (!validId(tokenId))
+            revert InvalidTokenID();
+
+        _tokenIds.increment();
+        _safeMint(_msgSender(), tokenId);
     }
 
     /**
@@ -71,20 +78,6 @@ contract Puppeeth is ERC721, Ownable {
             && tokenId % 100 > 10 && tokenId % 100 <= 55
             && tokenId % 1000 > 100 && tokenId % 1000 <= 555
             && tokenId % 10000 > 1000 && tokenId % 10000 <= 5555;
-    }
-
-    /**
-     * @dev Public mint.
-     */
-    function publicMint(uint16 tokenId) public payable {
-        if (msg.value < TOKEN_PRICE)
-            revert InvalidPayment();
-
-        if (!validId(tokenId))
-            revert InvalidTokenID();
-
-        _tokenIds.increment();
-        _safeMint(_msgSender(), tokenId);
     }
 
     /**
@@ -107,5 +100,12 @@ contract Puppeeth is ERC721, Ownable {
      */
     function tokenMinted(uint16 tokenId) public view returns (bool) {
       return _exists(tokenId);
+    }
+
+    /**
+     * @dev See {ERC721-_baseURI}.
+     */
+    function _baseURI() internal pure override returns (string memory) {
+        return "ipfs://QmXmjY1bFMuH5fCGbZ8CHd8fFWzJRZxTKQo7aievy7LUou/";
     }
 }

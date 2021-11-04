@@ -81,7 +81,7 @@ function PuppeePicker() {
       let overrides = {
         value: payment
       };
-      const transaction = await tokenContract.publicMint(tokenId, overrides);
+      const transaction = await tokenContract.mint(tokenId, overrides);
       await transaction.wait();
     } catch (err) {
       console.log("Error: ", err);
