@@ -27,6 +27,7 @@ describe("Puppeeth", function () {
   // Declare common variables
   let owner, secondAddress, PuppeethContract, Puppeeth;
   let tokenUri = (id) => `ipfs://QmXmjY1bFMuH5fCGbZ8CHd8fFWzJRZxTKQo7aievy7LUou/${id}.json`;
+  let payment = ethers.utils.parseEther(".015");
 
   before(async function () {
 
@@ -78,27 +79,28 @@ describe("Puppeeth", function () {
     }
   });
 
-  it("should mint for the owner", async function () {
-    await Puppeeth.ownerMint(11112);
-    expect(await Puppeeth.tokenURI(11112)).to.equal(tokenUri(11112));
-  });
-
   it("should not mint with a bad ID", async function () {
     let msg = "InvalidTokenID";
     let badIds = [
       11110, // Lower bound
-    ]
+    ];
+    let overrides = {
+      value: payment
+    };
     for (let i in badIds) {
       await expect(
-        Puppeeth.ownerMint(badIds[i])
+        Puppeeth.publicMint(badIds[i], overrides)
       ).to.be.revertedWith(msg);
     }
   });
 
   it("should not mint duplicates", async function () {
     expect(await Puppeeth.tokenURI(11111)).to.equal(tokenUri(11111));
+    let overrides = {
+      value: payment
+    };
     await expect(
-      Puppeeth.ownerMint(11111)
+      Puppeeth.publicMint(11111, overrides)
     ).to.be.revertedWith("token already minted");
   });
 
@@ -113,8 +115,19 @@ describe("Puppeeth", function () {
     ).to.be.revertedWith("transfer caller is not owner nor approved");
   });
 
+  it("should mint for the owner", async function () {
+    let overrides = {
+      value: payment
+    };
+    let oldBalance = await owner.getBalance();
+    await Puppeeth.publicMint(44331, overrides);
+    expect(await Puppeeth.tokenURI(44331)).to.equal(tokenUri(44331));
+    expect(await Puppeeth.ownerOf(44331)).to.equal(owner.address);
+    let newBalance = await owner.getBalance();
+    expect(oldBalance.sub(newBalance).sub(payment).lt(payment)).to.be.true;
+  });
+
   it("should mint for the public", async function () {
-    let payment = ethers.utils.parseEther(".02");
     let overrides = {
       value: payment
     };

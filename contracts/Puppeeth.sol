@@ -8,7 +8,7 @@
 //  Original artwork by Olivia Porter
 
 //SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity 0.8.9;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -67,17 +67,6 @@ contract Puppeeth is ERC721, Ownable {
             && tokenId % 100 > 10 && tokenId % 100 <= 55
             && tokenId % 1000 > 100 && tokenId % 1000 <= 555
             && tokenId % 10000 > 1000 && tokenId % 10000 <= 5555;
-    }
-
-    /**
-     * @dev Owner-only mint.
-     */
-    function ownerMint(uint16 tokenId) public onlyOwner {
-        if (!validId(tokenId))
-            revert InvalidTokenID();
-
-        _tokenIds.increment();
-        _safeMint(_msgSender(), tokenId);
     }
 
     /**
