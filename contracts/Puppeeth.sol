@@ -18,29 +18,33 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 /// @author Decentralized Software Systems, LLC
 /// @notice NFT avatar art collection hosted on IPFS and tokenized on Ethereum
 contract Puppeeth is ERC721, Ownable {
-
+    // Counter.
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
-
-    // Starting ID.
-    uint16 startingId = 11111;
 
     // Price.
     uint256 constant TOKEN_PRICE = .015 ether;
 
-    // Invalid token event.
+    // Invalid token error.
     error InvalidTokenID();
 
-    // Invalid payment event.
+    // Invalid payment error.
     error InvalidPayment();
 
     /**
      * @dev Constructor
      */
     constructor() ERC721("puppeeth", "PUPPEETH") {
-        for (uint8 i = 1; i <= 5; i++) {
+        uint16[5] memory reserved = [
+            11111,
+            22222,
+            33333,
+            44444,
+            55555
+        ];
+        for (uint8 i = 0; i < reserved.length; i++) {
             _tokenIds.increment();
-            _safeMint(_msgSender(), i * startingId);
+            _safeMint(_msgSender(), reserved[i]);
         }
     }
 
