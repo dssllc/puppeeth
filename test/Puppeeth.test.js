@@ -26,7 +26,7 @@ describe("Token ID Algorithm", function () {
 describe("Puppeeth", function () {
   // Declare common variables
   let owner, secondAddress, PuppeethContract, Puppeeth;
-  let tokenUri = (id) => `ipfs://QmXmjY1bFMuH5fCGbZ8CHd8fFWzJRZxTKQo7aievy7LUou/${id}.json`;
+  let tokenUri = (id) => `ipfs://QmQ7RjBwwKPuhndnjhr8wSTXJFcWx5EUEwvqpduLBXwkf5/${id}.json`;
   let payment = ethers.utils.parseEther(".015");
 
   before(async function () {
@@ -38,7 +38,7 @@ describe("Puppeeth", function () {
     PuppeethContract = await ethers.getContractFactory("Puppeeth");
     Puppeeth = await PuppeethContract.deploy();
     await Puppeeth.deployed();
-    await Puppeeth.setBaseURI("ipfs://QmXmjY1bFMuH5fCGbZ8CHd8fFWzJRZxTKQo7aievy7LUou/");
+    await Puppeeth.setBaseURI("ipfs://QmQ7RjBwwKPuhndnjhr8wSTXJFcWx5EUEwvqpduLBXwkf5/");
   });
 
   it("should return true for valid IDs", async function () {

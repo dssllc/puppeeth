@@ -59,8 +59,8 @@ def make_pup(combo):
     # Output the metadata
     metadata = {
         "name": "Puppee " + img_id,
-        "description": "A Pup from the Puppeeth collection",
-        "image": "ipfs://QmQU2ny4seZNoPdTo3aWEfrrqQ7aP2aNEnp83xqFDcoGYZ/" + img_id + ".jpg",
+        "description": "Super cute puppee from puppeeth collection",
+        "image": "ipfs://QmVRR9fAhnxkZShMDVnipBNK9TNSqXysvKdYZ2Usz4HMQ8/" + img_id + ".jpg",
         "external_url": "https://puppeeth.art",
         "attributes": [
             {
@@ -84,7 +84,7 @@ def make_pup(combo):
                 "value": faces[face]
             }
         ],
-
+      "contract": "0x21A51805A7f47AB2261809E93F4617B68234CdF1"
     }
     with open("img/metadata/" + img_id + ".json", "w") as write_file:
         json.dump(metadata, write_file)
