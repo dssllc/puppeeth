@@ -47,10 +47,10 @@ def make_pup(combo):
     face_img = Image.open("img/parts/" + parts_groups[face] + "/face.png")
 
     # Paste images over each other
-    body_img.alpha_composite(fur_img) 
+    body_img.alpha_composite(fur_img)
     body_img.alpha_composite(face_img)
-    body_img.alpha_composite(ears_img) 
-    body_img.alpha_composite(shirt_img) 
+    body_img.alpha_composite(ears_img)
+    body_img.alpha_composite(shirt_img)
 
     # Output the image
     body_img = body_img.convert('RGB')
@@ -58,9 +58,10 @@ def make_pup(combo):
 
     # Output the metadata
     metadata = {
-        "name": "Pup " + img_id,
+        "name": "Puppee " + img_id,
         "description": "A Pup from the Puppeeth collection",
-        "image": "ipfs://",
+        "image": "ipfs://QmQU2ny4seZNoPdTo3aWEfrrqQ7aP2aNEnp83xqFDcoGYZ/" + img_id + ".jpg",
+        "external_url": "https://puppeeth.art",
         "attributes": [
             {
                 "trait_type": "Body",
@@ -82,7 +83,8 @@ def make_pup(combo):
                 "trait_type": "Face",
                 "value": faces[face]
             }
-        ]
+        ],
+
     }
     with open("img/metadata/" + img_id + ".json", "w") as write_file:
         json.dump(metadata, write_file)
@@ -97,11 +99,11 @@ while counter <= max_id:
         counter += 6
     else:
         counter += 1
-    
+
     # Skip 6-0 for tens position
     if counter % 100 > 55:
         counter += 50
-    
+
     # Skip 6-0 for hundreds position
     if counter % 1000 > 555:
         counter += 500

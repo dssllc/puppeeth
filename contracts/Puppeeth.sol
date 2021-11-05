@@ -23,6 +23,9 @@ contract Puppeeth is ERC721, Ownable {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
 
+    // Base URI.
+    string private _baseTokenURI;
+
     // Price.
     uint256 constant private TOKEN_PRICE = .015 ether;
 
@@ -48,7 +51,7 @@ contract Puppeeth is ERC721, Ownable {
     }
 
     /// @notice Public mint.
-    function mint(uint16 tokenId) public payable {
+    function mint(uint16 tokenId) external payable {
         if (msg.value != TOKEN_PRICE)
             revert InvalidPayment();
 
@@ -80,24 +83,29 @@ contract Puppeeth is ERC721, Ownable {
     }
 
     /// @notice Withdrawl accrued balance.
-    function withdraw() public onlyOwner {
+    function withdraw() external onlyOwner {
         uint balance = address(this).balance;
         payable(msg.sender).transfer(balance);
     }
 
     /// @notice Get total number of tokens.
-    function totalTokens() public view returns (uint256) {
+    function totalTokens() external view returns (uint256) {
       return _tokenIds.current();
     }
 
     /// @notice Indicate if token is minted.
-    function tokenMinted(uint16 tokenId) public view returns (bool) {
+    function tokenMinted(uint16 tokenId) external view returns (bool) {
       return _exists(tokenId);
     }
 
-    /// @notice Returns token base URI.
+    /// @notice Set base token URI.
+    function setBaseURI(string memory baseURI) external onlyOwner {
+        _baseTokenURI = baseURI;
+    }
+
+    /// @notice Returns base token URI.
     /// @dev See {ERC721-_baseURI}.
-    function _baseURI() internal pure override returns (string memory) {
-        return "ipfs://QmXmjY1bFMuH5fCGbZ8CHd8fFWzJRZxTKQo7aievy7LUou/";
+    function _baseURI() internal view override returns (string memory) {
+        return _baseTokenURI;
     }
 }

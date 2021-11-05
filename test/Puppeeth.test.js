@@ -38,6 +38,7 @@ describe("Puppeeth", function () {
     PuppeethContract = await ethers.getContractFactory("Puppeeth");
     Puppeeth = await PuppeethContract.deploy();
     await Puppeeth.deployed();
+    await Puppeeth.setBaseURI("ipfs://QmXmjY1bFMuH5fCGbZ8CHd8fFWzJRZxTKQo7aievy7LUou/");
   });
 
   it("should return true for valid IDs", async function () {
