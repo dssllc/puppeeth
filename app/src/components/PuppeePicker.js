@@ -29,6 +29,7 @@ function PuppeePicker() {
   const [mintedToken, setMintedToken] = useState(false);
   const [tokenId, setTokenId] = useState(0);
   const [tokenIdImg, setTokenIdImg] = useState(null);
+  const [totalTokens, setTotalTokens] = useState(3125);
 
   let signer;
   let tokenContract;
@@ -58,6 +59,12 @@ function PuppeePicker() {
     tokenContract = new ethers.Contract(CONTRACT_ADDRESS, Puppeeth.abi, web3React.library);
     tokenId = tokenId || 0;
     setMintedToken(await tokenContract.tokenMinted(parseInt(tokenId)));
+    getTotalTokens();
+  }
+
+  async function getTotalTokens() {
+    tokenContract = new ethers.Contract(CONTRACT_ADDRESS, Puppeeth.abi, web3React.library);
+    setTotalTokens((await tokenContract.totalTokens()).toNumber());
   }
 
   function generateRandomId() {
@@ -170,6 +177,9 @@ function PuppeePicker() {
                 Disconnect
               </Button>
             </ButtonGroup>
+          </Grid>
+          <Grid item xs={12}>
+            <p>{(3125 - totalTokens) || "--"}/3125 🐶 remaining</p>
           </Grid>
             </>}
           </Grid>
