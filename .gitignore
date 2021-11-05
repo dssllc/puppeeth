@@ -1,5 +1,6 @@
 img
 app/public/collection
+.env
 
 node_modules
 

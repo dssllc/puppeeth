@@ -1,8 +1,10 @@
 require("@nomiclabs/hardhat-waffle");
+require("@nomiclabs/hardhat-etherscan");
 require("hardhat-gas-reporter");
 
 const alchemyRinkebyEndpoint = process.env.ALCHEMY_ENDPOINT_RINKEBY || "https://eth-rinkeby.alchemyapi.io/v2/67890";
 const privateKey = process.env.PRIVATE_KEY || "0000000000000000000000000000000000000000";
+const etherScanAPIKey = process.env.ETHERSCAN_API_KEY || "";
 const cmcAPIKey = process.env.CMC_API_KEY || "";
 
 /**
@@ -34,5 +36,8 @@ module.exports = {
     enabled: true,
     showTimeSpent: true,
     coinmarketcap: cmcAPIKey
+  },
+  etherscan: {
+    apiKey: etherScanAPIKey
   }
 };
