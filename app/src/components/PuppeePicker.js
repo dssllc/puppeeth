@@ -33,16 +33,24 @@ function PuppeePicker() {
   let signer;
   let tokenContract;
 
+  function tokenImgURI(theTokenId) {
+    return `https://gateway.pinata.cloud/ipfs/QmVRR9fAhnxkZShMDVnipBNK9TNSqXysvKdYZ2Usz4HMQ8/${theTokenId}.jpg`;
+  };
+
   function walletConnected() {
     return web3React.account && web3React.connector instanceof InjectedConnector;
   }
 
-  function initConnection() {
-    web3React.activate(injected);
+  async function initConnection() {
+    await web3React.activate(injected);
+    setTokenId(55555);
+    setTokenIdImg(tokenImgURI(55555));
+    setMintedToken(true);
   }
 
-  function closeConnection() {
-    web3React.deactivate();
+  async function closeConnection() {
+    await web3React.deactivate();
+    setTokenId(0);
   }
 
   async function checkToken(tokenId) {
@@ -61,7 +69,7 @@ function PuppeePicker() {
 
   async function updateImage(theTokenId) {
     setTokenId(theTokenId);
-    setTokenIdImg(`https://gateway.pinata.cloud/ipfs/QmVRR9fAhnxkZShMDVnipBNK9TNSqXysvKdYZ2Usz4HMQ8/${theTokenId}.jpg`);
+    setTokenIdImg(tokenImgURI(theTokenId));
     await checkToken(theTokenId);
   }
 
@@ -110,10 +118,11 @@ function PuppeePicker() {
             <TextField
               required
               value={tokenId}
-              label={!walletConnected() ? "Please connect a wallet" : "Token ID"}
+              label={!walletConnected() ? "Please connect a wallet" : "Puppee ID"}
               onChange={e => updateImage(e.target.value)}
               disabled={!walletConnected()}
               inputProps={{ maxLength: 5 }}
+              error={!validId(tokenId)}
             />
           </Grid>
           <Grid item xs={12}>
@@ -160,10 +169,21 @@ function PuppeePicker() {
             </>}
         </Grid>
         <Grid item xs={6}>
+          {walletConnected() && validId(tokenId) &&
           <img
             src={tokenIdImg}
             alt={"Puppee " + tokenId}
             className={mintedToken ? classes.purchased : null} width="100%" />
+          }
+          {walletConnected() && !validId(tokenId) &&
+          <p>Please enter a Puppee ID</p>
+          }
+          {!walletConnected() &&
+          <img
+            src={tokenImgURI(55555)}
+            alt={"Puppee 55555"}
+            width="100%" />
+          }
         </Grid>
       </Grid>
 
