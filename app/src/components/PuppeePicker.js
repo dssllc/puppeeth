@@ -7,7 +7,7 @@ import { ethers } from "ethers";
 import Puppeeth
   from "../artifacts/contracts/Puppeeth.sol/Puppeeth.json";
 
-const CONTRACT_ADDRESS = "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853";
+const CONTRACT_ADDRESS = "0x5DB2C7cCD6bc00F394068A24D00b18736dcFCD98";
 
 const injected = new InjectedConnector({ supportedChainIds: [1, 3, 4, 5, 42, 1337] });
 
@@ -29,9 +29,6 @@ function PuppeePicker() {
   const [mintedToken, setMintedToken] = useState(false);
   const [tokenId, setTokenId] = useState(0);
   const [tokenIdImg, setTokenIdImg] = useState(null);
-  const handleSubmit = (e) => {
-      e.preventDefault();
-  }
 
   let signer;
   let tokenContract;
@@ -50,8 +47,7 @@ function PuppeePicker() {
 
   async function checkToken(tokenId) {
     tokenContract = new ethers.Contract(CONTRACT_ADDRESS, Puppeeth.abi, web3React.library);
-    console.log(await tokenContract.tokenMinted(tokenId))
-    setMintedToken(await tokenContract.tokenMinted(tokenId));
+    setMintedToken(await tokenContract.tokenMinted(parseInt(tokenId)));
   }
 
   function generateRandom() {
@@ -65,7 +61,7 @@ function PuppeePicker() {
 
   async function updateImage(theTokenId) {
     setTokenId(theTokenId);
-    setTokenIdImg(`/collection/${theTokenId}.jpg`);
+    setTokenIdImg(`https://gateway.pinata.cloud/ipfs/QmVRR9fAhnxkZShMDVnipBNK9TNSqXysvKdYZ2Usz4HMQ8/${theTokenId}.jpg`);
     await checkToken(theTokenId);
   }
 
@@ -164,7 +160,10 @@ function PuppeePicker() {
             </>}
         </Grid>
         <Grid item xs={6}>
-          <img src={tokenIdImg} className={mintedToken ? classes.purchased : null} width="100%" />
+          <img
+            src={tokenIdImg}
+            alt={"Puppee " + tokenId}
+            className={mintedToken ? classes.purchased : null} width="100%" />
         </Grid>
       </Grid>
 
