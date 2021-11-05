@@ -155,7 +155,7 @@ describe("Puppeeth", function () {
 
   it("should return total number of tokens", async function () {
     let totalTokens = await Puppeeth.totalTokens();
-    expect(totalTokens).to.eql(BigNumber.from("10"));
+    expect(totalTokens).to.eql(BigNumber.from("13"));
   });
 
   it("should return true when token is minted", async function () {

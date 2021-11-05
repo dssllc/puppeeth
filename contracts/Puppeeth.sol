@@ -37,7 +37,7 @@ contract Puppeeth is ERC721, Ownable {
 
     /// @notice Reserves some tokens for the authors.
     constructor() ERC721("puppeeth", "PUPPEETH") {
-        uint16[8] memory reserved = [
+        uint16[11] memory reserved = [
             11111,
             22222,
             33333,
@@ -45,7 +45,10 @@ contract Puppeeth is ERC721, Ownable {
             55555,
             11423,
             31314,
-            42142
+            31315,
+            42142,
+            11521,
+            51111
         ];
         for (uint8 i = 0; i < reserved.length; i++) {
             _tokenIds.increment();
