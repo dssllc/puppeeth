@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, TextField, Button, Container } from "@material-ui/core";
+import { Grid, TextField, Button, ButtonGroup } from "@material-ui/core";
 import { useWeb3React } from "@web3-react/core";
 import { InjectedConnector } from "@web3-react/injected-connector";
 import { ethers } from "ethers";
 import Puppeeth
   from "../artifacts/contracts/Puppeeth.sol/Puppeeth.json";
 
-const CONTRACT_ADDRESS = "0x5DB2C7cCD6bc00F394068A24D00b18736dcFCD98";
+const CONTRACT_ADDRESS = "0x21A51805A7f47AB2261809E93F4617B68234CdF1";
 
 const injected = new InjectedConnector({ supportedChainIds: [1, 3, 4, 5, 42, 1337] });
 
@@ -43,28 +43,34 @@ function PuppeePicker() {
 
   async function initConnection() {
     await web3React.activate(injected);
+    let newId = generateRandomId();
     setTokenId(55555);
     setTokenIdImg(tokenImgURI(55555));
     setMintedToken(true);
   }
 
-  async function closeConnection() {
-    await web3React.deactivate();
+  function closeConnection() {
+    web3React.deactivate();
     setTokenId(0);
   }
 
   async function checkToken(tokenId) {
     tokenContract = new ethers.Contract(CONTRACT_ADDRESS, Puppeeth.abi, web3React.library);
+    tokenId = tokenId || 0;
     setMintedToken(await tokenContract.tokenMinted(parseInt(tokenId)));
   }
 
-  function generateRandom() {
+  function generateRandomId() {
     let randomTokenID = 0;
 
     while (!validId(randomTokenID))
       randomTokenID = Math.floor(Math.random() * (55555 - 11111) + 11111);
 
-    updateImage(randomTokenID);
+    return randomTokenID;
+  }
+
+  function generateRandom() {
+    updateImage(generateRandomId());
   }
 
   async function updateImage(theTokenId) {
@@ -101,74 +107,8 @@ function PuppeePicker() {
   };
 
   return (
-    <Container>
-      <Grid container spacing={3}>
-        <Grid item xs={6}>
-          <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <img src="puppeeth.png" width="100%" alt="puppeeth" />
-              <p>An NFT avatar art collection</p>
-            </Grid>
-
-
-          </Grid>
-
-          {walletConnected() && <>
-          <Grid item xs={12}>
-            <TextField
-              required
-              value={tokenId}
-              label={!walletConnected() ? "Please connect a wallet" : "Puppee ID"}
-              onChange={e => updateImage(e.target.value)}
-              disabled={!walletConnected()}
-              inputProps={{ maxLength: 5 }}
-              error={!validId(tokenId)}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={generateRandom}
-            >
-              Random 🐶
-            </Button>
-            <Button
-              variant="contained"
-              disabled={!validId(tokenId) || mintedToken}
-              color="primary"
-              onClick={handleMint}
-            >
-              {mintedToken ? 'Sold!' : 'Buy!'}
-            </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={closeConnection}
-            >
-              Disconnect
-            </Button>
-
-
-
-
-
-
-            </Grid>
-            </>}
-            {!walletConnected() && <>
-            <Grid item xs={12}>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={initConnection}
-              >
-                Connect Wallet
-              </Button>
-            </Grid>
-            </>}
-        </Grid>
-        <Grid item xs={6}>
+      <>
+        <Grid item xs={8}>
           {walletConnected() && validId(tokenId) &&
           <img
             src={tokenIdImg}
@@ -185,12 +125,67 @@ function PuppeePicker() {
             width="100%" />
           }
         </Grid>
-      </Grid>
 
-      <p>token Id: {tokenId}</p>
-      <p>token minted: {mintedToken ? 'Yes' : 'No'}</p>
-
-    </Container>
+        <Grid item xs={12}>
+        <Grid
+          container
+          spacing={3}
+          direction="column"
+          alignItems="center"
+          justifyContent="center">
+          {walletConnected() && <>
+          <Grid item xs={12}>
+            <TextField
+              required
+              value={tokenId}
+              label={!walletConnected() ? "Please connect a wallet" : "Puppee ID"}
+              onChange={e => updateImage(e.target.value)}
+              disabled={!walletConnected()}
+              inputProps={{ maxLength: 5 }}
+              error={!validId(tokenId)}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <ButtonGroup>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={generateRandom}
+              >
+                Random 🐶
+              </Button>
+              <Button
+                variant="contained"
+                disabled={!validId(tokenId) || mintedToken}
+                color="primary"
+                onClick={handleMint}
+              >
+                {mintedToken ? 'Sold!' : 'Buy!'}
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={closeConnection}
+              >
+                Disconnect
+              </Button>
+            </ButtonGroup>
+          </Grid>
+            </>}
+          </Grid>
+            {!walletConnected() && <>
+            <Grid item xs={12}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={initConnection}
+              >
+                Connect Wallet
+              </Button>
+            </Grid>
+            </>}
+        </Grid>
+    </>
 
   );
 }
