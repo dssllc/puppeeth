@@ -20,7 +20,8 @@ const useStyles = makeStyles((theme) => ({
   },
   mainImg: {
     width: "100%",
-    maxWidth: "500px"
+    maxWidth: "600px",
+    border: "3px solid black"
   }
 }));
 
