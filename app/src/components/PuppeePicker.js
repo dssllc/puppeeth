@@ -17,6 +17,10 @@ const useStyles = makeStyles((theme) => ({
   },
   purchased: {
     filter: `grayscale('100%')`
+  },
+  mainImg: {
+    width: "100%",
+    maxWidth: "500px"
   }
 }));
 
@@ -114,26 +118,26 @@ function PuppeePicker() {
   };
 
   return (
-      <>
-        <Grid item xs={8}>
-          {walletConnected() && validId(tokenId) &&
-          <img
-            src={tokenIdImg}
-            alt={"Puppee " + tokenId}
-            className={mintedToken ? classes.purchased : null} width="100%" />
-          }
-          {walletConnected() && !validId(tokenId) &&
-          <p>Please enter a Puppee ID</p>
-          }
-          {!walletConnected() &&
-          <img
-            src={tokenImgURI(55555)}
-            alt={"Puppee 55555"}
-            width="100%" />
-          }
-        </Grid>
+    <>
+      <Grid item xs={8}>
+        {walletConnected() && validId(tokenId) &&
+        <img
+          src={tokenIdImg}
+          alt={"Puppee " + tokenId}
+          className={classes.mainImg} />
+        }
+        {walletConnected() && !validId(tokenId) &&
+        <p>Please enter a Puppee ID</p>
+        }
+        {!walletConnected() &&
+        <img
+          src={tokenImgURI(55555)}
+          alt={"Puppee 55555"}
+          className={classes.mainImg} />
+        }
+      </Grid>
 
-        <Grid item xs={12}>
+      <Grid item xs={12}>
         <Grid
           container
           spacing={3}
@@ -141,49 +145,48 @@ function PuppeePicker() {
           alignItems="center"
           justifyContent="center">
           {walletConnected() && <>
-          <Grid item xs={12}>
-            <TextField
-              required
-              value={tokenId}
-              label={!walletConnected() ? "Please connect a wallet" : "Puppee ID"}
-              onChange={e => updateImage(e.target.value)}
-              disabled={!walletConnected()}
-              inputProps={{ maxLength: 5 }}
-              error={!validId(tokenId)}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <ButtonGroup>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={generateRandom}
-              >
-                Random 🐶
-              </Button>
-              <Button
-                variant="contained"
-                disabled={!validId(tokenId) || mintedToken}
-                color="primary"
-                onClick={handleMint}
-              >
-                {mintedToken ? 'Sold!' : 'Buy!'}
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={closeConnection}
-              >
-                Disconnect
-              </Button>
-            </ButtonGroup>
-          </Grid>
-          <Grid item xs={12}>
-            <p>{(3125 - totalTokens) || "--"}/3125 🐶 remaining</p>
-          </Grid>
-            </>}
-          </Grid>
-            {!walletConnected() && <>
+            <Grid item xs={12}>
+              <TextField
+                required
+                value={tokenId}
+                label={!walletConnected() ? "Please connect a wallet" : "Puppee ID"}
+                onChange={e => updateImage(e.target.value)}
+                disabled={!walletConnected()}
+                inputProps={{ maxLength: 5 }}
+                error={!validId(tokenId)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <ButtonGroup>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={generateRandom}
+                >
+                  Random 🐶
+                </Button>
+                <Button
+                  variant="contained"
+                  disabled={!validId(tokenId) || mintedToken}
+                  color="primary"
+                  onClick={handleMint}
+                >
+                  {mintedToken ? 'Sold!' : 'Mint!'}
+                </Button>
+
+              </ButtonGroup>
+            </Grid>
+            <Grid item xs={12}>
+            <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={closeConnection}
+                >
+                  Disconnect
+                </Button>
+            </Grid>
+          </>}
+          {!walletConnected() && <>
             <Grid item xs={12}>
               <Button
                 variant="contained"
@@ -193,10 +196,10 @@ function PuppeePicker() {
                 Connect Wallet
               </Button>
             </Grid>
-            </>}
+          </>}
         </Grid>
+      </Grid>
     </>
-
   );
 }
 

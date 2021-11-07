@@ -3,11 +3,15 @@ import { ethers } from "ethers";
 import { CssBaseline, makeStyles, Typography, Container, Grid, Link } from "@material-ui/core";
 import PuppeePicker from './components/PuppeePicker';
 import { ThemeProvider, createTheme } from "@material-ui/core/styles"
+import Copyright from './components/Copyright';
 
 const themeLight = createTheme({
   palette: {
     background: {
       default: "#fff"
+    },
+    primary: {
+      main: "#4012F7"
     }
   }
 });
@@ -50,18 +54,14 @@ function App() {
               <Typography component="h1" align="center" className={classes.hidden}>
                 puppeeth
               </Typography>
-              <Typography component="h2"  align="center">
+              <Typography variant="body2" align="center">
                 A simple NFT avatar collection made with ❤️ and 🐶
               </Typography>
             </Grid>
+
             <PuppeePicker />
-            <Grid item xs={12}>
-              <Typography component="p" align="center">
-                &copy; 2021 <Link href="mailto:info@decentralizedsoftware.systems">Decentralized Software Systems, LLC</Link>
-                <br />
-                <Link target="_blank" href="https://etherscan.io/address/0x21A51805A7f47AB2261809E93F4617B68234CdF1">Etherscan</Link>
-              </Typography>
-            </Grid>
+
+            <Copyright />
           </Grid>
         </Container>
       </ThemeProvider>
