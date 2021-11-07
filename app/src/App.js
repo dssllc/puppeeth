@@ -1,9 +1,10 @@
 import { Web3ReactProvider } from '@web3-react/core';
 import { ethers } from "ethers";
-import { CssBaseline, makeStyles, Typography, Container, Grid, Link } from "@material-ui/core";
+import { CssBaseline, makeStyles, Typography, Container, Grid } from "@material-ui/core";
 import PuppeePicker from './components/PuppeePicker';
 import { ThemeProvider, createTheme } from "@material-ui/core/styles"
 import Copyright from './components/Copyright';
+import About from './components/About';
 
 const themeLight = createTheme({
   palette: {
@@ -60,6 +61,8 @@ function App() {
             </Grid>
 
             <PuppeePicker />
+
+            <About />
 
             <Copyright />
           </Grid>

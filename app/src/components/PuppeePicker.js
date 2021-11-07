@@ -105,7 +105,7 @@ function PuppeePicker() {
       const transaction = await tokenContract.mint(tokenId, overrides);
       await transaction.wait();
     } catch (err) {
-      console.log("Error: ", err);
+      console.log(err);
     }
   }
 
