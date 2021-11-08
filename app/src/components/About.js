@@ -35,6 +35,9 @@ export default function About() {
       <Typography className={classes.question}>How many Puppees are there?</Typography>
       <Typography>Puppeeth has a supply of <strong>3125</strong> Puppees controlled by an algorithm, not a counter. Each ID is specific to the Puppee.</Typography>
 
+      <Typography className={classes.question}>How much does it cost to mint?</Typography>
+      <Typography>Only <strong>0.015ETH</strong> + gas. Mint yours now!</Typography>
+
       <Typography className={classes.question}>What kind of token is Puppeeth?</Typography>
       <Typography>Puppeeth uses the ERC-721 token standard on Ethereum. Please check out the contract on Etherscan using the link at the bottom of the page.</Typography>
 

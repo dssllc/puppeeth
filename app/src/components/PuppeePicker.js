@@ -15,13 +15,14 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
-  purchased: {
-    filter: `grayscale('100%')`
-  },
   mainImg: {
     width: "100%",
     maxWidth: "600px",
     border: "3px solid black"
+  },
+  price: {
+    color: theme.palette.primary.main,
+    fontWeight: "bold"
   }
 }));
 
@@ -138,7 +139,7 @@ function PuppeePicker() {
           alt={"Puppee 55555"}
           className={classes.mainImg} />
         }
-        <Typography variant="h5" align="center">{(3125 - totalTokens) || "--"} of 3125 🐶 remaining</Typography>
+        <Typography variant="h6" align="center">{(3125 - totalTokens) || "--"} of 3125 🐶 available - <span className={classes.price}>0.015ETH</span> to mint</Typography>
       </Grid>
 
       <Grid item xs={12}>
