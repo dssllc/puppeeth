@@ -90,7 +90,9 @@ function PuppeePicker() {
 
   async function updateImage(theTokenId) {
     setTokenId(theTokenId);
-    setTokenIdImg(tokenImgURI(theTokenId));
+    if (validId(theTokenId)) {
+      setTokenIdImg(tokenImgURI(theTokenId));
+    }
     await checkToken(theTokenId);
   }
 
@@ -124,14 +126,11 @@ function PuppeePicker() {
   return (
     <>
       <Grid item xs={8}>
-        {walletConnected() && validId(tokenId) &&
+        {walletConnected() &&
         <img
           src={tokenIdImg}
           alt={"Puppee " + tokenId}
           className={classes.mainImg} />
-        }
-        {walletConnected() && !validId(tokenId) &&
-        <p>Please enter a Puppee ID</p>
         }
         {!walletConnected() &&
         <img
@@ -159,6 +158,7 @@ function PuppeePicker() {
                 disabled={!walletConnected()}
                 inputProps={{ maxLength: 5 }}
                 error={!validId(tokenId)}
+                helperText="Only five (5) numbers, one through five (1-5)"
               />
             </Grid>
             <Grid item xs={12}>

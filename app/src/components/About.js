@@ -1,4 +1,4 @@
-import {Typography, Grid, makeStyles} from '@material-ui/core';
+import { Typography, Grid, makeStyles } from '@material-ui/core';
 
 export default function About() {
 
