@@ -33,7 +33,7 @@ export default function About() {
       <Typography>The web3 development is by Decentralized Software Systems, LLC. We are a small business focused on web3 development and technologies.</Typography>
 
       <Typography className={classes.question}>How many Puppees are there?</Typography>
-      <Typography>Puppeeth has a supply of 3125 Puppees controlled by an algorithm, not a counter. Each ID is specific to the Puppee.</Typography>
+      <Typography>Puppeeth has a supply of <strong>3125</strong> Puppees controlled by an algorithm, not a counter. Each ID is specific to the Puppee.</Typography>
 
       <Typography className={classes.question}>What kind of token is Puppeeth?</Typography>
       <Typography>Puppeeth uses the ERC-721 token standard on Ethereum. Please check out the contract on Etherscan using the link at the bottom of the page.</Typography>

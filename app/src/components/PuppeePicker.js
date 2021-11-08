@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, TextField, Button, ButtonGroup } from "@material-ui/core";
+import { Grid, TextField, Button, ButtonGroup, Typography } from "@material-ui/core";
 import { useWeb3React } from "@web3-react/core";
 import { InjectedConnector } from "@web3-react/injected-connector";
 import { ethers } from "ethers";
@@ -31,6 +31,10 @@ function PuppeePicker() {
 
   const web3React = useWeb3React();
 
+  useEffect(() => {
+    getTotalTokens()
+  });
+
   const [mintedToken, setMintedToken] = useState(false);
   const [tokenId, setTokenId] = useState(0);
   const [tokenIdImg, setTokenIdImg] = useState(null);
@@ -49,7 +53,6 @@ function PuppeePicker() {
 
   async function initConnection() {
     await web3React.activate(injected);
-    let newId = generateRandomId();
     setTokenId(55555);
     setTokenIdImg(tokenImgURI(55555));
     setMintedToken(true);
@@ -68,7 +71,7 @@ function PuppeePicker() {
   }
 
   async function getTotalTokens() {
-    tokenContract = new ethers.Contract(CONTRACT_ADDRESS, Puppeeth.abi, web3React.library);
+    tokenContract = new ethers.Contract(CONTRACT_ADDRESS, Puppeeth.abi, ethers.getDefaultProvider());
     setTotalTokens((await tokenContract.totalTokens()).toNumber());
   }
 
@@ -136,6 +139,7 @@ function PuppeePicker() {
           alt={"Puppee 55555"}
           className={classes.mainImg} />
         }
+        <Typography variant="h5" align="center">{(3125 - totalTokens) || "--"} of 3125 🐶 remaining</Typography>
       </Grid>
 
       <Grid item xs={12}>
