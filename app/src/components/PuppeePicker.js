@@ -135,7 +135,7 @@ function PuppeePicker() {
         }
         {!walletConnected() &&
         <img
-          src={tokenImgURI(55555)}
+          src="/puppees-2x2.jpg"
           alt={"Puppee 55555"}
           className={classes.mainImg} />
         }
