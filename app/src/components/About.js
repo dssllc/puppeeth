@@ -46,7 +46,7 @@ export default function About() {
 
       <Typography className={classes.question}>What makes this token unique?</Typography>
       <Typography>Puppeeth uses a simple algorithm to control the token supply and valid ID values.</Typography>
-      <Typography>The algorithm is a <em>pure</em> function that allows for the <u>token mint to consume less gas than a token transfer</u>!</Typography>
+      <Typography>The algorithm is a <em>pure</em> function that allows for the <u>token mint to consume around the same gas as a token transfer</u>!</Typography>
 
       <Typography className={classes.question}>What makes a Puppee unique?</Typography>
       <Typography>Each number in the Puppee ID indicates a specific attribute. Each attribute is 1 in 5, but attribute combinations make each Puppee more rare than others.</Typography>
