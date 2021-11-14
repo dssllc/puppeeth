@@ -13,7 +13,9 @@ export default function Copyright() {
   return (
     <footer className={classes.root}>
       <Typography variant="subtitle" align="center" component="p">
-      &copy; {new Date().getFullYear()} <Link href="mailto:info@decentralizedsoftware.systems">Decentralized Software Systems, LLC</Link>
+      made with ❤️ by <Link href="mailto:info@decentralizedsoftware.systems">Decentralized Software Systems, LLC</Link>
+      <br />
+      &copy; {new Date().getFullYear()}
       </Typography>
     </footer>
   );

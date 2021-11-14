@@ -1,6 +1,10 @@
 import { Typography, makeStyles, Container } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
+  title: {
+    fontFamily: "'Mali', cursive",
+    letterSpacing: '-0.25rem'
+  },
   question: {
     fontWeight: "bold",
     marginTop: theme.spacing(3)
@@ -12,6 +16,9 @@ export default function Faqs() {
 
   return (
     <Container maxWidth="sm">
+      <Typography className={classes.title} component="h2" variant="h3" align="center" gutterBottom>
+        faqs
+      </Typography>
       <Typography><strong>How many Puppees are there?</strong></Typography>
       <Typography>Puppeeth has a supply of <strong>3125</strong> Puppees controlled by an algorithm, not a counter. Each ID is specific to the Puppee.</Typography>
 

@@ -18,11 +18,9 @@ const useStyles = makeStyles((theme) => ({
   mainImg: {
     width: "100%",
     maxWidth: "400px",
-    border: "3px solid black"
-  },
-  price: {
-    color: theme.palette.primary.main,
-    fontWeight: "bold"
+    borderWidth: "2px",
+    borderColor: theme.palette.primary.main,
+    borderStyle: "solid"
   }
 }));
 
@@ -132,19 +130,19 @@ function PuppeePicker() {
           <Typography variant="body1" align="left">🐶{(3125 - totalTokens) || "--"} left</Typography>
         </Grid>
         <Grid item xs={6} sm={6} md={6}>
-          <Typography variant="body1" className={classes.price} align="right">💰0.015ETH</Typography>
+          <Typography variant="body1" align="right">💰<strong>0.015ETH</strong></Typography>
         </Grid>
       </Grid>
 
 
 
-      {walletConnected() &&
+      {walletConnected() && tokenId != "0" &&
       <img
         src={tokenIdImg}
         alt={"Puppee " + tokenId}
         className={classes.mainImg} />
       }
-      {!walletConnected() &&
+      {(!walletConnected() || tokenId == "0") &&
       <img
         src="/puppees-2x2.jpg"
         alt={"Puppee 55555"}
@@ -167,6 +165,8 @@ function PuppeePicker() {
               inputProps={{ maxLength: 5 }}
               error={!validId(tokenId)}
               helperText="Only five (5) numbers, one through five (1-5)"
+              maxLength={5}
+              fullWidth
             />
           </Grid>
           <Grid item xs={12}>
