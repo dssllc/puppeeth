@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, TextField, Button, ButtonGroup, Typography } from "@material-ui/core";
+import { Container, Grid, TextField, Button, ButtonGroup, Typography } from "@material-ui/core";
 import { useWeb3React } from "@web3-react/core";
 import { InjectedConnector } from "@web3-react/injected-connector";
 import { ethers } from "ethers";
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
   mainImg: {
     width: "100%",
-    maxWidth: "600px",
+    maxWidth: "400px",
     border: "3px solid black"
   },
   price: {
@@ -126,7 +126,7 @@ function PuppeePicker() {
 
   return (
     <>
-      <Grid item xs={8}>
+      <Container maxWidth="sm" align="center">
         {walletConnected() &&
         <img
           src={tokenIdImg}
@@ -140,9 +140,7 @@ function PuppeePicker() {
           className={classes.mainImg} />
         }
         <Typography variant="h6" align="center">{(3125 - totalTokens) || "--"} of 3125 🐶 available - <span className={classes.price}>0.015ETH</span> to mint</Typography>
-      </Grid>
 
-      <Grid item xs={12}>
         <Grid
           container
           spacing={3}
@@ -204,7 +202,7 @@ function PuppeePicker() {
             </Grid>
           </>}
         </Grid>
-      </Grid>
+      </Container>
     </>
   );
 }

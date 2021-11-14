@@ -1,17 +1,20 @@
-import {Typography, Grid, Link} from '@material-ui/core';
-import TwitterIcon from '@material-ui/icons/Twitter';
+import { Typography, Link, makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    margin: theme.spacing(3),
+    flexGrow: 1,
+  },
+}));
 
 export default function Copyright() {
+  const classes = useStyles();
+
   return (
-    <>
-    <Grid item xs={12}>
-      <Typography variant="body2" align="center">
-        &copy; {new Date().getFullYear()} <Link href="mailto:info@decentralizedsoftware.systems">Decentralized Software Systems, LLC</Link>
+    <footer className={classes.root}>
+      <Typography variant="subtitle" align="center" component="p">
+      &copy; {new Date().getFullYear()} <Link href="mailto:info@decentralizedsoftware.systems">Decentralized Software Systems, LLC</Link>
       </Typography>
-      <Typography variant="body2" align="center">
-        <Link target="_blank" href="https://etherscan.io/address/0x21A51805A7f47AB2261809E93F4617B68234CdF1">Etherscan</Link>
-      </Typography>
-    </Grid>
-    </>
+    </footer>
   );
 }

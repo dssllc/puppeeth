@@ -3,21 +3,16 @@ import { Typography, makeStyles, Container } from '@material-ui/core';
 const useStyles = makeStyles((theme) => ({
   question: {
     fontWeight: "bold",
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(1)
+    marginTop: theme.spacing(3)
   }
 }));
 
-export default function About() {
+export default function Faqs() {
   const classes = useStyles();
 
   return (
-    <Container maxWidth="sm">
-      <Typography variant="h5" align="center">
-        About
-      </Typography>
-
-      <Typography className={classes.question}>Who made the artwork?</Typography>
+    <Container maxWidth="md">
+      <Typography><strong>Who made the artwork?</strong></Typography>
       <Typography>The original artwork is by a young lady named Olivia. She was 11 years old when the collection was created.</Typography>
       <Typography>WE ARE VERY PROUD ❤️</Typography>
 

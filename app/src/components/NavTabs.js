@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { AppBar, Tabs, Tab, makeStyles } from '@material-ui/core';
 import PuppeePicker from './PuppeePicker';
-import About from './About';
+import Faqs from './Faqs';
 import TabContext from '@material-ui/lab/TabContext';
 import TabList from '@material-ui/lab/TabList';
 import TabPanel from '@material-ui/lab/TabPanel';
+import Team from "./Team";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -13,6 +14,10 @@ const useStyles = makeStyles((theme) => ({
   customAppBar: {
     background: 'transparent',
     boxShadow: 'none'
+  },
+  team: {
+    backgroundColor: theme.palette.secondary.light,
+    color: theme.palette.background.paper
   },
   faqs: {
     backgroundColor: theme.palette.primary.light,
@@ -47,9 +52,11 @@ export default function NavTabs() {
         <TabPanel value="mint">
           <PuppeePicker />
         </TabPanel>
-        <TabPanel value="team">Item Twowerwer</TabPanel>
+        <TabPanel className={classes.team} value="team">
+          <Team />
+        </TabPanel>
         <TabPanel className={classes.faqs} value="faqs">
-          <About />
+          <Faqs />
         </TabPanel>
       </TabContext>
     </div>
