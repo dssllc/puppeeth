@@ -1,16 +1,17 @@
 import { AppBar, Toolbar, Typography, makeStyles, Link } from '@material-ui/core';
 import TwitterIcon from '@material-ui/icons/Twitter';
+import GitHubIcon from '@material-ui/icons/GitHub';
 
 const useStyles = makeStyles((theme) => ({
   icon: {
     marginRight: theme.spacing(2),
-    color: theme.palette.primary.main
   },
   rarible: {
     marginRight: theme.spacing(2),
     maxWidth: 24
   },
   etherscan: {
+    marginRight: theme.spacing(2),
     maxWidth: 24
   },
   filler: {
@@ -30,6 +31,9 @@ export default function TopBar() {
       <Toolbar>
         <img src="favicon-32x32.png" alt="puppeeth" className={classes.rarible} />
         <Typography className={classes.filler}></Typography>
+        <Link target="_blank" href="https://github.com/dssllc/puppeeth">
+          <GitHubIcon className={classes.icon} aria-label="GitHub" />
+        </Link>
         <Link target="_blank" href="https://twitter.com/puppeeth">
           <TwitterIcon className={classes.icon} aria-label="Twitter" />
         </Link>
