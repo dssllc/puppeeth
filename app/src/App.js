@@ -1,11 +1,17 @@
 import { Web3ReactProvider } from '@web3-react/core';
 import { ethers } from "ethers";
-import { CssBaseline, makeStyles, Typography, Container, Grid } from "@material-ui/core";
-import PuppeePicker from './components/PuppeePicker';
+import {
+  CssBaseline,
+  makeStyles,
+  Container,
+  Grid
+} from "@material-ui/core";
 import { ThemeProvider, createTheme } from "@material-ui/core/styles"
-import Copyright from './components/Copyright';
-import About from './components/About';
+import TopBar from './components/TopBar';
 import Hero from './components/Hero';
+import About from './components/About';
+import PuppeePicker from './components/PuppeePicker';
+import Copyright from './components/Copyright';
 
 const themeLight = createTheme({
   palette: {
@@ -19,13 +25,6 @@ const themeLight = createTheme({
 });
 
 const useStyles = makeStyles((theme) => ({
-  hidden: {
-    display: "none"
-  },
-  logo: {
-    width: "100%",
-    maxWidth: "500px",
-  },
   copyright: {
     paddingTop: "15px"
   }
@@ -43,8 +42,8 @@ function App() {
     <Web3ReactProvider getLibrary={getLibrary}>
       <ThemeProvider theme={themeLight}>
         <CssBaseline />
+        <TopBar />
         <Hero />
-
         <Container>
           <Grid
           container

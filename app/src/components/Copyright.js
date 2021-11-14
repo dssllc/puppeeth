@@ -5,13 +5,6 @@ export default function Copyright() {
   return (
     <>
     <Grid item xs={12}>
-      <Typography align="center">
-      <Link target="_blank" href="https://twitter.com/puppeeth">
-        <TwitterIcon />
-      </Link>
-      </Typography>
-    </Grid>
-    <Grid item xs={12}>
       <Typography variant="body2" align="center">
         &copy; {new Date().getFullYear()} <Link href="mailto:info@decentralizedsoftware.systems">Decentralized Software Systems, LLC</Link>
       </Typography>
