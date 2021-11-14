@@ -11,7 +11,6 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 24
   },
   etherscan: {
-    marginRight: theme.spacing(2),
     maxWidth: 24
   },
   filler: {
@@ -41,7 +40,7 @@ export default function TopBar() {
           <img src="rarible.png" alt="Rarible" className={classes.rarible} />
         </Link>
         <Link target="_blank" href="https://etherscan.io/address/0x21A51805A7f47AB2261809E93F4617B68234CdF1">
-        <img src="etherscan-logo-circle.png" alt="Etherscan" className={classes.etherscan} />
+          <img src="etherscan-logo-circle.png" alt="Etherscan" className={classes.etherscan} />
         </Link>
       </Toolbar>
     </AppBar>

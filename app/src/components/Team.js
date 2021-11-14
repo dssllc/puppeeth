@@ -1,4 +1,7 @@
-import { Typography, makeStyles, Container, Grid } from '@material-ui/core';
+import { Typography, makeStyles, Container, Grid, Link } from '@material-ui/core';
+import TwitterIcon from '@material-ui/icons/Twitter';
+import GitHubIcon from '@material-ui/icons/GitHub';
+import LinkedInIcon from '@material-ui/icons/LinkedIn';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -7,13 +10,17 @@ const useStyles = makeStyles((theme) => ({
   },
   name: {
     fontFamily: "'Mali', cursive",
-    letterSpacing: '-0.20rem'
+    letterSpacing: '-0.10rem'
   },
   photo: {
     width: "100%",
     maxWidth: "600px",
     border: "3px solid white"
-  }
+  },
+  icon: {
+    color: theme.palette.background.paper,
+    marginRight: theme.spacing(2),
+  },
 }));
 
 export default function Team() {
@@ -50,6 +57,15 @@ export default function Team() {
            CEO of Decentralized Software Systems, LLC
           </Typography>
           <Typography paragraph>A father, husband, and experienced web developer, David loves to find ways to work with Olivia on new and interesting projects.</Typography>
+          <Link target="_blank" href="https://github.com/dssllc">
+            <GitHubIcon className={classes.icon} aria-label="GitHub" />
+          </Link>
+          <Link target="_blank" href="https://twitter.com/dssllcdev">
+            <TwitterIcon className={classes.icon} aria-label="Twitter" />
+          </Link>
+          <Link target="_blank" href="https://www.linkedin.com/in/davmicporter/">
+            <LinkedInIcon className={classes.icon} aria-label="LinkedIn" />
+          </Link>
         </Grid>
       </Grid>
     </Container>

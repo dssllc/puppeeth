@@ -122,7 +122,7 @@ function PuppeePicker(props) {
 
       <Grid container>
         <Grid item xs={6} sm={6} md={6}>
-          <Typography variant="body1" align="left">🐶{(3125 - totalTokens) || "--"} left</Typography>
+          <Typography variant="body1" align="left">🐶 {(3125 - totalTokens) || "--"} left</Typography>
         </Grid>
         <Grid item xs={6} sm={6} md={6}>
           <Typography variant="body1" align="right">💰<strong>0.015ETH</strong></Typography>

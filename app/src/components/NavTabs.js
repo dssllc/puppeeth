@@ -20,11 +20,11 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "none"
   },
   team: {
-    backgroundColor: theme.palette.secondary.light,
+    backgroundColor: "#FF0094",
     color: theme.palette.background.paper
   },
   faqs: {
-    backgroundColor: theme.palette.primary.light,
+    backgroundColor: "#A305FA",
     color: theme.palette.background.paper
   }
 }));
