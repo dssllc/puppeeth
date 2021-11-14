@@ -31,7 +31,7 @@ export default function Team() {
           </Typography>
           <img src="olivia.jpg" alt="Olivia Porter - Artist" className={classes.photo} />
           <Typography className={classes.name} component="h3" variant="h5">
-          Olivia Porter 🎨
+          Olivia Porter 🎨 🎓
           </Typography>
           <Typography component="h4" variant="body2" gutterBottom>
            Artist and Student
@@ -44,7 +44,7 @@ export default function Team() {
           </Typography>
           <img src="david.jpg" alt="David Porter - Developer" className={classes.photo} />
           <Typography className={classes.name} component="h3" variant="h5">
-           David Porter
+           David Porter 💼 💻
           </Typography>
           <Typography component="h4" variant="body2" gutterBottom>
            CEO of Decentralized Software Systems, LLC

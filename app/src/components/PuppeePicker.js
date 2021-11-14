@@ -6,8 +6,7 @@ import { InjectedConnector } from "@web3-react/injected-connector";
 import { ethers } from "ethers";
 import Puppeeth
   from "../artifacts/contracts/Puppeeth.sol/Puppeeth.json";
-
-const CONTRACT_ADDRESS = "0x21A51805A7f47AB2261809E93F4617B68234CdF1";
+import { CONTRACT_ADDRESS } from "../constants";
 
 const injected = new InjectedConnector({ supportedChainIds: [1, 3, 4, 5, 42, 1337] });
 
@@ -24,20 +23,22 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function PuppeePicker() {
+function PuppeePicker(props) {
+
+  const { tokenId, tokenHandler, totalTokens } = props;
 
   const classes = useStyles();
 
   const web3React = useWeb3React();
 
   useEffect(() => {
-    getTotalTokens()
-  });
+    if (validId(tokenId)) {
+      setTokenIdImg(tokenImgURI(tokenId));
+    }
+  }, [tokenId]);
 
   const [mintedToken, setMintedToken] = useState(false);
-  const [tokenId, setTokenId] = useState(0);
   const [tokenIdImg, setTokenIdImg] = useState(null);
-  const [totalTokens, setTotalTokens] = useState(3125);
 
   let signer;
   let tokenContract;
@@ -52,26 +53,20 @@ function PuppeePicker() {
 
   async function initConnection() {
     await web3React.activate(injected);
-    setTokenId(55555);
+    tokenHandler(55555);
     setTokenIdImg(tokenImgURI(55555));
     setMintedToken(true);
   }
 
   function closeConnection() {
     web3React.deactivate();
-    setTokenId(0);
+    tokenHandler(0);
   }
 
   async function checkToken(tokenId) {
     tokenContract = new ethers.Contract(CONTRACT_ADDRESS, Puppeeth.abi, web3React.library);
     tokenId = tokenId || 0;
     setMintedToken(await tokenContract.tokenMinted(parseInt(tokenId)));
-    getTotalTokens();
-  }
-
-  async function getTotalTokens() {
-    tokenContract = new ethers.Contract(CONTRACT_ADDRESS, Puppeeth.abi, ethers.getDefaultProvider());
-    setTotalTokens((await tokenContract.totalTokens()).toNumber());
   }
 
   function generateRandomId() {
@@ -88,7 +83,7 @@ function PuppeePicker() {
   }
 
   async function updateImage(theTokenId) {
-    setTokenId(theTokenId);
+    tokenHandler(theTokenId);
     if (validId(theTokenId)) {
       setTokenIdImg(tokenImgURI(theTokenId));
     }
@@ -136,13 +131,13 @@ function PuppeePicker() {
 
 
 
-      {walletConnected() && tokenId != "0" &&
+      {walletConnected() && tokenId !== 0 &&
       <img
         src={tokenIdImg}
         alt={"Puppee " + tokenId}
         className={classes.mainImg} />
       }
-      {(!walletConnected() || tokenId == "0") &&
+      {(!walletConnected() || tokenId === 0) &&
       <img
         src="/puppees-2x2.jpg"
         alt={"Puppee 55555"}
@@ -184,7 +179,7 @@ function PuppeePicker() {
                 color="primary"
                 onClick={handleMint}
               >
-                {mintedToken ? 'Sold!' : 'Mint!'}
+                {mintedToken ? "Sold!" : "Mint!"}
               </Button>
 
             </ButtonGroup>
