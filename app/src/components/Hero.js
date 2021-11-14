@@ -23,7 +23,7 @@ export default function Hero() {
         <font color="#00FDE1">t</font>
         <font color="#1F06EB">h</font>
       </Typography>
-      <Typography variant="h5" align="center" paragraph>
+      <Typography variant="body1" align="center" paragraph>
         An NFT avatar art collection made with love ❤️ and puppees 🐶
       </Typography>
     </Container>

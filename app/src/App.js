@@ -9,9 +9,8 @@ import {
 import { ThemeProvider, createTheme } from "@material-ui/core/styles"
 import TopBar from './components/TopBar';
 import Hero from './components/Hero';
-import About from './components/About';
-import PuppeePicker from './components/PuppeePicker';
 import Copyright from './components/Copyright';
+import NavTabs from './components/NavTabs';
 
 const themeLight = createTheme({
   palette: {
@@ -44,6 +43,8 @@ function App() {
         <CssBaseline />
         <TopBar />
         <Hero />
+        <NavTabs />
+
         <Container>
           <Grid
           container
@@ -52,10 +53,6 @@ function App() {
           alignItems="center"
           justifyContent="center"
           style={{ minHeight: '100vh' }}>
-
-            <PuppeePicker />
-
-            <About />
 
             <Copyright />
           </Grid>

@@ -1,26 +1,18 @@
-import { Typography, Grid, makeStyles } from '@material-ui/core';
+import { Typography, makeStyles, Container } from '@material-ui/core';
+
+const useStyles = makeStyles((theme) => ({
+  question: {
+    fontWeight: "bold",
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(1)
+  }
+}));
 
 export default function About() {
-
-  const useStyles = makeStyles((theme) => ({
-    aboutRiver: {
-      backgroundColor: theme.palette.primary.light,
-      width: "100%",
-      color: "#fff",
-      marginTop: theme.spacing(2)
-    },
-    question: {
-      fontWeight: "bold",
-      marginTop: theme.spacing(3),
-      marginBottom: theme.spacing(1)
-    }
-  }));
-
   const classes = useStyles();
 
   return (
-    <>
-    <Grid item xs={12} md={8} className={classes.aboutRiver}>
+    <Container maxWidth="sm">
       <Typography variant="h5" align="center">
         About
       </Typography>
@@ -58,7 +50,6 @@ export default function About() {
 
       <Typography className={classes.question}>How many tokens did the creators get?</Typography>
       <Typography>We minted 11 tokens when the contract was deployed, for friends and family. All new tokens must be minted through the contract, for everyone.</Typography>
-    </Grid>
-    </>
+    </Container>
   );
 }
