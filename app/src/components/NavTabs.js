@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { AppBar, Tabs, Tab, makeStyles } from '@material-ui/core';
+import { useState } from "react";
+import { AppBar, Tab, makeStyles } from '@material-ui/core';
 import PuppeePicker from './PuppeePicker';
 import Faqs from './Faqs';
 import TabContext from '@material-ui/lab/TabContext';
@@ -44,8 +44,9 @@ export default function NavTabs() {
             onChange={handleChange}
             aria-label="puppeeth navigation"
             centered>
-            <Tab label="mint" value="mint" />
+
             <Tab label="team" value="team" />
+            <Tab label="mint" value="mint" />
             <Tab label="faqs" value="faqs" />
           </TabList>
         </AppBar>

@@ -2,8 +2,8 @@ import { Typography, Link, makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    margin: theme.spacing(3),
-    flexGrow: 1,
+    padding: theme.spacing(3),
+    flexGrow: 1
   },
 }));
 

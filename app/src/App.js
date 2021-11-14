@@ -9,9 +9,6 @@ import NavTabs from './components/NavTabs';
 
 const themeLight = createTheme({
   palette: {
-    background: {
-      default: "#fff"
-    },
     primary: {
       main: "#4012F7"
     }

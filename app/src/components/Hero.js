@@ -24,7 +24,7 @@ export default function Hero() {
         <font color="#1F06EB">h</font>
       </Typography>
       <Typography variant="body1" align="center" paragraph>
-        An NFT avatar art collection made with love ❤️ and puppees 🐶
+        An NFT avatar art collection<br />made with love ❤️ and puppees 🐶
       </Typography>
     </Container>
   );

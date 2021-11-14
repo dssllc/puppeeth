@@ -23,15 +23,14 @@ export default function Team() {
     <Container maxWidth="md">
       <Grid
         container
-        spacing={4}
+        spacing={6}
         justifyContent="center">
-
         <Grid item xs={12} sm={6} md={6}>
           <Typography className={classes.title} component="h2" variant="h3" align="center" gutterBottom>
             artist
           </Typography>
           <img src="olivia.jpg" alt="Olivia Porter - Artist" className={classes.photo} />
-          <Typography className={classes.name} component="h3" variant="h4">
+          <Typography className={classes.name} component="h3" variant="h5">
           Olivia Porter 🎨
           </Typography>
           <Typography component="h4" variant="body2" gutterBottom>
@@ -44,11 +43,11 @@ export default function Team() {
           developer
           </Typography>
           <img src="david.jpg" alt="David Porter - Developer" className={classes.photo} />
-          <Typography className={classes.name} component="h3" variant="h4">
+          <Typography className={classes.name} component="h3" variant="h5">
            David Porter
           </Typography>
           <Typography component="h4" variant="body2" gutterBottom>
-           CEO, Decentralized Software Systems, LLC
+           CEO of Decentralized Software Systems, LLC
           </Typography>
           <Typography paragraph>A father, husband, and experienced web developer, David loves to find ways to work with Olivia on new and interesting projects.</Typography>
         </Grid>
