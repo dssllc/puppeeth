@@ -5,6 +5,7 @@ import PuppeePicker from './components/PuppeePicker';
 import { ThemeProvider, createTheme } from "@material-ui/core/styles"
 import Copyright from './components/Copyright';
 import About from './components/About';
+import Hero from './components/Hero';
 
 const themeLight = createTheme({
   palette: {
@@ -42,6 +43,8 @@ function App() {
     <Web3ReactProvider getLibrary={getLibrary}>
       <ThemeProvider theme={themeLight}>
         <CssBaseline />
+        <Hero />
+
         <Container>
           <Grid
           container
@@ -50,15 +53,6 @@ function App() {
           alignItems="center"
           justifyContent="center"
           style={{ minHeight: '100vh' }}>
-            <Grid item xs={12}>
-              <img src="puppeeth.png" alt="puppeeth" className={classes.logo} />
-              <Typography component="h1" align="center" className={classes.hidden}>
-                puppeeth
-              </Typography>
-              <Typography variant="body2" align="center">
-                A simple NFT avatar collection made with ❤️ and 🐶
-              </Typography>
-            </Grid>
 
             <PuppeePicker />
 
