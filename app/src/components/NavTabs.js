@@ -7,9 +7,10 @@ import TabList from "@material-ui/lab/TabList";
 import TabPanel from "@material-ui/lab/TabPanel";
 import Team from "./Team";
 import { ethers } from "ethers";
+import { useWeb3React } from "@web3-react/core";
 import Puppeeth
   from "../artifacts/contracts/Puppeeth.sol/Puppeeth.json";
-import { CONTRACT_ADDRESS } from "../constants";
+import { CONTRACT_ADDRESS, RPC_ENDPOINT_1, RPC_ENDPOINT_4, NETWORK_ID } from "../constants";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,12 +31,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function NavTabs() {
-  let tokenContract;
+  let tokenContract = new ethers.Contract(
+    CONTRACT_ADDRESS,
+    Puppeeth.abi,
+    ethers.getDefaultProvider(NETWORK_ID === 4 ? RPC_ENDPOINT_4 : RPC_ENDPOINT_1)
+  );
 
   const classes = useStyles();
 
+  const web3React = useWeb3React();
+
   async function getTotalTokens() {
-    tokenContract = new ethers.Contract(CONTRACT_ADDRESS, Puppeeth.abi, ethers.getDefaultProvider());
     setTotalTokens((await tokenContract.totalTokens()).toNumber());
   }
 
@@ -72,6 +78,8 @@ export default function NavTabs() {
             tokenId={tokenId}
             tokenHandler={setTokenId}
             totalTokens={totalTokens}
+            tokenContract={tokenContract}
+            web3React={web3React}
           />
         </TabPanel>
         <TabPanel className={classes.team} value="team">
