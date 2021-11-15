@@ -1,6 +1,15 @@
 import { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Container, Grid, TextField, Button, ButtonGroup, Typography } from "@material-ui/core";
+import {
+  Container,
+  Grid,
+  TextField,
+  Button,
+  ButtonGroup,
+  Typography,
+  Backdrop,
+  CircularProgress
+} from "@material-ui/core";
 import { useWeb3React } from "@web3-react/core";
 import { InjectedConnector } from "@web3-react/injected-connector";
 import { ethers } from "ethers";
@@ -20,10 +29,16 @@ const useStyles = makeStyles((theme) => ({
     borderWidth: "2px",
     borderColor: theme.palette.primary.main,
     borderStyle: "solid"
+  },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#fff',
   }
 }));
 
 function PuppeePicker(props) {
+
+  const backdropMsgDefault = "Check your wallet...";
 
   const { tokenId, tokenHandler, totalTokens } = props;
 
@@ -39,6 +54,8 @@ function PuppeePicker(props) {
 
   const [mintedToken, setMintedToken] = useState(false);
   const [tokenIdImg, setTokenIdImg] = useState(null);
+  const [openBackdrop, setOpenBackdrop] = useState(false);
+  const [backdropMsg, setBackdropMsg] = useState(backdropMsgDefault);
 
   let signer;
   let tokenContract;
@@ -95,6 +112,7 @@ function PuppeePicker(props) {
   }
 
   async function mint() {
+    setOpenBackdrop(true);
     signer = web3React.library.getSigner(web3React.account);
     tokenContract = new ethers.Contract(CONTRACT_ADDRESS, Puppeeth.abi, signer);
     try {
@@ -103,8 +121,13 @@ function PuppeePicker(props) {
         value: payment
       };
       const transaction = await tokenContract.mint(tokenId, overrides);
+      setBackdropMsg("Minting your 🐶");
       await transaction.wait();
+      setOpenBackdrop(false);
+      setBackdropMsg(backdropMsgDefault);
+      checkToken(tokenId);
     } catch (err) {
+      setOpenBackdrop(false);
       console.log(err);
     }
   }
@@ -118,95 +141,108 @@ function PuppeePicker(props) {
   };
 
   return (
-    <Container className={classes.root} align="center">
-
-      <Grid container>
-        <Grid item xs={6} sm={6} md={6}>
-          <Typography variant="body1" align="left">🐶 {(3125 - totalTokens) || "--"} left</Typography>
+    <>
+      <Backdrop className={classes.backdrop} open={openBackdrop}>
+        <Grid container spacing={3}>
+          <Grid container item xs={12} justifyContent="center">
+            <CircularProgress color="inherit" />
+          </Grid>
+          <Grid container item xs={12} justifyContent="center">
+            <Typography component="p">
+              {backdropMsg}
+            </Typography>
+          </Grid>
         </Grid>
-        <Grid item xs={6} sm={6} md={6}>
-          <Typography variant="body1" align="right">💰<strong>0.015ETH</strong></Typography>
+      </Backdrop>
+
+      <Container className={classes.root} align="center">
+
+        <Grid container>
+          <Grid item xs={6} sm={6} md={6}>
+            <Typography variant="body1" align="left">🐶 {(3125 - totalTokens) || "--"} left</Typography>
+          </Grid>
+          <Grid item xs={6} sm={6} md={6}>
+            <Typography variant="body1" align="right">💰<strong>0.015ETH</strong></Typography>
+          </Grid>
         </Grid>
-      </Grid>
 
+        {walletConnected() && tokenId !== 0 &&
+        <img
+          src={tokenIdImg}
+          alt={"Puppee " + tokenId}
+          className={classes.mainImg} />
+        }
+        {(!walletConnected() || tokenId === 0) &&
+        <img
+          src="/puppees-2x2.jpg"
+          alt={"Puppee 55555"}
+          className={classes.mainImg} />
+        }
+        <Grid
+          container
+          spacing={3}
+          direction="column"
+          alignItems="center"
+          justifyContent="center">
+          {walletConnected() && <>
+            <Grid item xs={12}>
+              <TextField
+                required
+                value={tokenId}
+                label={!walletConnected() ? "Please connect a wallet" : "Puppee ID"}
+                onChange={e => updateImage(e.target.value)}
+                disabled={!walletConnected()}
+                inputProps={{ maxLength: 5 }}
+                error={!validId(tokenId)}
+                helperText="Only five (5) numbers, one through five (1-5)"
+                maxLength={5}
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <ButtonGroup>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={generateRandom}
+                >
+                  Random 🐶
+                </Button>
+                <Button
+                  variant="contained"
+                  disabled={!validId(tokenId) || mintedToken}
+                  color="primary"
+                  onClick={handleMint}
+                >
+                  {mintedToken ? "Sold!" : "Mint!"}
+                </Button>
 
-
-      {walletConnected() && tokenId !== 0 &&
-      <img
-        src={tokenIdImg}
-        alt={"Puppee " + tokenId}
-        className={classes.mainImg} />
-      }
-      {(!walletConnected() || tokenId === 0) &&
-      <img
-        src="/puppees-2x2.jpg"
-        alt={"Puppee 55555"}
-        className={classes.mainImg} />
-      }
-      <Grid
-        container
-        spacing={3}
-        direction="column"
-        alignItems="center"
-        justifyContent="center">
-        {walletConnected() && <>
-          <Grid item xs={12}>
-            <TextField
-              required
-              value={tokenId}
-              label={!walletConnected() ? "Please connect a wallet" : "Puppee ID"}
-              onChange={e => updateImage(e.target.value)}
-              disabled={!walletConnected()}
-              inputProps={{ maxLength: 5 }}
-              error={!validId(tokenId)}
-              helperText="Only five (5) numbers, one through five (1-5)"
-              maxLength={5}
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <ButtonGroup>
-              <Button
-                variant="outlined"
-                color="primary"
-                onClick={generateRandom}
-              >
-                Random 🐶
-              </Button>
-              <Button
-                variant="contained"
-                disabled={!validId(tokenId) || mintedToken}
-                color="primary"
-                onClick={handleMint}
-              >
-                {mintedToken ? "Sold!" : "Mint!"}
-              </Button>
-
-            </ButtonGroup>
-          </Grid>
-          <Grid item xs={12}>
-          <Button
-                variant="contained"
-                color="secondary"
-                onClick={closeConnection}
-              >
-                Disconnect
-              </Button>
-          </Grid>
-        </>}
-        {!walletConnected() && <>
-          <Grid item xs={12}>
+              </ButtonGroup>
+            </Grid>
+            <Grid item xs={12}>
             <Button
-              variant="contained"
-              color="primary"
-              onClick={initConnection}
-            >
-              Connect Wallet
-            </Button>
-          </Grid>
-        </>}
-      </Grid>
-    </Container>
+                  variant="contained"
+                  color="secondary"
+                  onClick={closeConnection}
+                >
+                  Disconnect
+                </Button>
+            </Grid>
+          </>}
+          {!walletConnected() && <>
+            <Grid item xs={12}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={initConnection}
+              >
+                Connect Wallet
+              </Button>
+            </Grid>
+          </>}
+        </Grid>
+      </Container>
+    </>
   );
 }
 
