@@ -55,6 +55,7 @@ def make_pup(combo):
     # Output the image
     body_img = body_img.convert('RGB')
     body_img.save("img/collection/" + img_id + ".jpg", "JPEG", optimize=True, quality=75)
+    body_img.save("img/collection/" + img_id + ".png", "PNG")
 
     # Output the metadata
     metadata = {
