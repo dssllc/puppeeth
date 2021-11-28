@@ -15,7 +15,7 @@ import { InjectedConnector } from "@web3-react/injected-connector";
 import { ethers } from "ethers";
 import Puppeeth
   from "../artifacts/contracts/Puppeeth.sol/Puppeeth.json";
-import { CONTRACT_ADDRESS } from "../constants";
+import { CONTRACT_ADDRESS, RPC_ENDPOINT } from "../constants";
 
 const injected = new InjectedConnector({ supportedChainIds: [1, 3, 4, 5, 42, 1337] });
 
@@ -65,23 +65,29 @@ function PuppeePicker(props) {
   };
 
   function walletConnected() {
-    return web3React.account && web3React.connector instanceof InjectedConnector;
+    return web3React.active;
   }
 
   async function initConnection() {
     await web3React.activate(injected);
-    tokenHandler(55555);
-    setTokenIdImg(tokenImgURI(55555));
-    setMintedToken(true);
+    if (!tokenId) {
+      let newId = generateRandomId();
+      tokenHandler(newId);
+      setTokenIdImg(tokenImgURI(newId));
+    }
+    await checkToken(tokenId);
   }
 
   function closeConnection() {
     web3React.deactivate();
-    tokenHandler(0);
   }
 
   async function checkToken(tokenId) {
-    tokenContract = new ethers.Contract(CONTRACT_ADDRESS, Puppeeth.abi, web3React.library);
+    tokenContract = tokenContract || new ethers.Contract(
+      CONTRACT_ADDRESS,
+      Puppeeth.abi,
+      ethers.getDefaultProvider(RPC_ENDPOINT)
+    );
     tokenId = tokenId || 0;
     setMintedToken(await tokenContract.tokenMinted(parseInt(tokenId)));
   }
@@ -166,16 +172,16 @@ function PuppeePicker(props) {
           </Grid>
         </Grid>
 
-        {walletConnected() && tokenId !== 0 &&
+        {tokenId !== 0 &&
         <img
           src={tokenIdImg}
           alt={"Puppee " + tokenId}
           className={classes.mainImg} />
         }
-        {(!walletConnected() || tokenId === 0) &&
+        {tokenId === 0 &&
         <img
           src="/puppees-2x2.jpg"
-          alt={"Puppee 55555"}
+          alt={"Puppee Collection"}
           className={classes.mainImg} />
         }
         <Grid
@@ -184,41 +190,42 @@ function PuppeePicker(props) {
           direction="column"
           alignItems="center"
           justifyContent="center">
-          {walletConnected() && <>
+          {tokenId !== 0 && <>
             <Grid item xs={12}>
               <TextField
                 required
                 value={tokenId}
-                label={!walletConnected() ? "Please connect a wallet" : "Puppee ID"}
+                label="Puppee ID"
                 onChange={e => updateImage(e.target.value)}
-                disabled={!walletConnected()}
-                inputProps={{ maxLength: 5 }}
+                inputProps={{ maxLength: 5, style: { textAlign: 'center', fontSize: 24 } }}
                 error={!validId(tokenId)}
                 helperText="Only five (5) numbers, one through five (1-5)"
                 maxLength={5}
                 fullWidth
               />
             </Grid>
-            <Grid item xs={12}>
-              <ButtonGroup>
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  onClick={generateRandom}
-                >
-                  Random 🐶
-                </Button>
-                <Button
-                  variant="contained"
-                  disabled={!validId(tokenId) || mintedToken}
-                  color="primary"
-                  onClick={handleMint}
-                >
-                  {mintedToken ? "Sold!" : "Mint!"}
-                </Button>
+          </>}
+          <Grid item xs={12}>
+            <ButtonGroup>
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={generateRandom}
+              >
+                Random 🐶
+              </Button>
+              <Button
+                variant="contained"
+                disabled={!walletConnected() || !validId(tokenId) || mintedToken}
+                color="primary"
+                onClick={handleMint}
+              >
+                {mintedToken ? "Sold!" : "Mint!"}
+              </Button>
 
-              </ButtonGroup>
-            </Grid>
+            </ButtonGroup>
+          </Grid>
+          {walletConnected() && <>
             <Grid item xs={12}>
             <Button
                   variant="contained"
