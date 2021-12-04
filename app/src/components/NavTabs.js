@@ -10,6 +10,9 @@ import { ethers } from "ethers";
 import Puppeeth
   from "../artifacts/contracts/Puppeeth.sol/Puppeeth.json";
 import { CONTRACT_ADDRESS, RPC_ENDPOINT } from "../constants";
+import {
+  Link
+} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -64,10 +67,24 @@ export default function NavTabs() {
             onChange={handleChange}
             aria-label="puppeeth navigation"
             centered>
-
-            <Tab label="team" value="team" />
-            <Tab label="mint" value="mint" />
-            <Tab label="faqs" value="faqs" />
+            <Tab
+              label="team"
+              value="team"
+              component={Link}
+              to="/team"
+            />
+            <Tab
+              label="mint"
+              value="mint"
+              component={Link}
+              to="/"
+            />
+            <Tab
+              label="faqs"
+              value="faqs"
+              component={Link}
+              to="/faqs"
+            />
           </TabList>
         </AppBar>
         <TabPanel value="mint">
