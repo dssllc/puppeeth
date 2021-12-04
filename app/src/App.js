@@ -14,7 +14,11 @@ const themeLight = createTheme({
     },
     primary: {
       main: "#4012F7"
-    }
+    },
+  },
+  titleFont: {
+    fontFamily: "'Mali', cursive",
+    letterSpacing: '-0.25rem'
   }
 });
 

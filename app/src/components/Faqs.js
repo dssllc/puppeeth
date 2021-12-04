@@ -1,10 +1,10 @@
-import { Typography, makeStyles, Container } from '@material-ui/core';
+import {
+  Typography,
+  makeStyles
+} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
-  title: {
-    fontFamily: "'Mali', cursive",
-    letterSpacing: '-0.25rem'
-  },
+  title: theme.titleFont,
   question: {
     fontWeight: "bold",
     marginTop: theme.spacing(3)
@@ -15,7 +15,7 @@ export default function Faqs() {
   const classes = useStyles();
 
   return (
-    <Container maxWidth="sm">
+    <>
       <Typography className={classes.title} component="h2" variant="h3" align="center" gutterBottom>
         faqs
       </Typography>
@@ -45,6 +45,6 @@ export default function Faqs() {
 
       <Typography className={classes.question}>How many tokens did the creators get?</Typography>
       <Typography>We minted 11 tokens when the contract was deployed, for friends and family. All new tokens must be minted through the contract, for everyone.</Typography>
-    </Container>
+    </>
   );
 }

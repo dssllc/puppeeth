@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { AppBar, Tab, makeStyles } from "@material-ui/core";
 import PuppeePicker from "./PuppeePicker";
-import Faqs from "./Faqs";
+import Info from "./Info";
 import TabContext from "@material-ui/lab/TabContext";
 import TabList from "@material-ui/lab/TabList";
 import TabPanel from "@material-ui/lab/TabPanel";
@@ -68,22 +68,22 @@ export default function NavTabs() {
             aria-label="puppeeth navigation"
             centered>
             <Tab
-              label="team"
+              label="Team"
               value="team"
               component={Link}
               to="/team"
             />
             <Tab
-              label="mint"
+              label="Mint"
               value="mint"
               component={Link}
               to="/"
             />
             <Tab
-              label="faqs"
-              value="faqs"
+              label="Info"
+              value="info"
               component={Link}
-              to="/faqs"
+              to="/info"
             />
           </TabList>
         </AppBar>
@@ -97,8 +97,8 @@ export default function NavTabs() {
         <TabPanel className={classes.team} value="team">
           <Team />
         </TabPanel>
-        <TabPanel className={classes.faqs} value="faqs">
-          <Faqs />
+        <TabPanel className={classes.faqs} value="info">
+          <Info />
         </TabPanel>
       </TabContext>
     </div>
