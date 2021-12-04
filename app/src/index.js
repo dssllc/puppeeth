@@ -8,13 +8,17 @@ import {
   Routes,
   Route
 } from "react-router-dom";
+import Team from "./components/Team";
+import Mint from "./components/Mint";
+import Info from "./components/Info";
 
 ReactDOM.render(
   <BrowserRouter>
   <Routes>
     <Route path="/" element={<App />}>
-      <Route path="team" />
-      <Route path="info" />
+      <Route index element={<Mint />} />
+      <Route path="team" element={<Team />} />
+      <Route path="info" element={<Info />} />
     </Route>
   </Routes>
 </BrowserRouter>,

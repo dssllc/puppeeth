@@ -6,6 +6,7 @@ import TopBar from './components/TopBar';
 import Hero from './components/Hero';
 import Copyright from './components/Copyright';
 import NavTabs from './components/NavTabs';
+import { Outlet } from "react-router-dom";
 
 const themeLight = createTheme({
   palette: {
@@ -35,6 +36,7 @@ function App() {
         <TopBar />
         <Hero />
         <NavTabs />
+        <Outlet />
         <Copyright />
       </ThemeProvider>
     </Web3ReactProvider>
