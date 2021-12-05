@@ -23,11 +23,11 @@ export default function Proceeds() {
   const classes = useStyles();
 
   const expenseData = [
+    { title: 'Charity 🤝', value: 8, color: '#1F06EB' },
+    { title: 'Artist College Fund 🎓', value: 23, color: '#00FE39' },
+    { title: 'Artist Funding 🎨', value: 3, color: '#FF0000' },
+    { title: 'Marketing and Development Funding 🚨', value: 34, color: '#FF0094' },
     { title: 'Taxes 💸', value: 32, color: '#ababab' },
-    { title: 'Artist College Fund 🎓', value: 31, color: '#00FE39' },
-    { title: 'Artist Expenses 🎨', value: 3, color: '#FF0000' },
-    { title: 'Marketing Expenses 🚨', value: 17, color: '#1F06EB' },
-    { title: 'Development Expenses 🛠', value: 17, color: '#FF0094' },
   ];
 
   return (
