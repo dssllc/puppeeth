@@ -12,7 +12,19 @@ const cmcAPIKey = process.env.CMC_API_KEY || "";
  * @type import('hardhat/config').HardhatUserConfig
  */
 module.exports = {
-  solidity: "0.8.9",
+  solidity: {
+    compilers: [
+      {
+        version: "0.8.10",
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 800,
+          },
+        },
+      },
+    ],
+  },
   paths: {
     artifacts: './app/src/artifacts',
   },
@@ -34,7 +46,7 @@ module.exports = {
   },
   gasReporter: {
     currency: "USD",
-    enabled: false,
+    enabled: true,
     showTimeSpent: true,
     coinmarketcap: cmcAPIKey
   },

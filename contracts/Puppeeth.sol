@@ -1,5 +1,5 @@
 //SPDX-License-Identifier: MIT
-pragma solidity 0.8.9;
+pragma solidity ^0.8.9;
 
 //                                     _   _
 //   _ __  _   _ _ __  _ __   ___  ___| |_| |__
